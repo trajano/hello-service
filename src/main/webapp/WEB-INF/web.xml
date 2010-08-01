@@ -13,32 +13,13 @@
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 
-	<!-- <listener> <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> 
-		</listener> -->
-	<!-- <servlet> <servlet-name>spring-ws</servlet-name> <servlet-class>org.springframework.ws.transport.http.MessageDispatcherServlet</servlet-class> 
-		<load-on-startup>1</load-on-startup> </servlet> <servlet-mapping> <servlet-name>spring-ws</servlet-name> 
-		<url-pattern>/*</url-pattern> </servlet-mapping> -->
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:org/codehaus/xfire/spring/xfire.xml</param-value>
-	</context-param>
-
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
 	<servlet>
 		<servlet-name>xfire</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<servlet-class>org.codehaus.xfire.transport.http.XFireConfigurableServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>xfire</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
-	<!-- <listener> <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class> 
-		</listener> -->
-	<!-- <servlet> <display-name>HelloService</display-name> <servlet-name>HelloService</servlet-name> 
-		<servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class> 
-		</servlet> <servlet-mapping> <servlet-name>HelloService</servlet-name> <url-pattern>/*</url-pattern> 
-		</servlet-mapping> -->
 </web-app>
