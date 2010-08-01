@@ -4,6 +4,15 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5" metadata-complete="true">
 	<display-name>hello-service</display-name>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+      		classpath:META-INF/cxf/cxf.xml
+      		classpath:META-INF/cxf/cxf-extension-soap.xml
+      		classpath:META-INF/cxf/cxf-servlet.xml
+     	</param-value>
+	</context-param>
+
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>

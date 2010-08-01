@@ -1,5 +1,6 @@
 package net.trajano.ws.helloservice.itest;
 
+import junit.framework.Assert;
 import net.trajano.ws.helloservice.Hello;
 import net.trajano.ws.helloservice.HelloService;
 import net.trajano.ws.helloservice.SayHello;
@@ -21,6 +22,6 @@ public class ConnectionTest {
 		final SayHello parameters = new SayHello();
 		parameters.setIn("abc");
 		final SayHelloResponse sayHello = h.sayHello(parameters);
-		System.out.println(sayHello.getOut());
+		Assert.assertEquals("{{HelloStrinCXFabc", sayHello.getOut());
 	}
 }
