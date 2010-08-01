@@ -2,17 +2,20 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
 	xsi:schemaLocation="
-	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 	http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 
-
+	<!-- Required imports for CXF -->
 	<import resource="classpath:META-INF/cxf/cxf.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
-	<jaxws:endpoint id="helloWorld" implementor="#hello"
-		address="/hello" />
-	<bean id="hello" class="org.example.helloservice.impl.HelloImpl">
-		<property name="helloString" value="HelloStrinCXF" />
-	</bean>
+	<!-- End points -->
+	<jaxws:endpoint address="/hello">
+		<jaxws:implementor>
+			<bean class="org.example.helloservice.impl.HelloImpl">
+				<property name="helloString" value="HelloStrinCXF" />
+			</bean>
+		</jaxws:implementor>
+	</jaxws:endpoint>
 </beans>
