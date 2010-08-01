@@ -35,15 +35,6 @@
 						<configuration>
 						</configuration>
 					</execution>
-					<execution>
-						<id>Cook</id>
-						<goals>
-							<goal>wsgen</goal>
-						</goals>
-						<configuration>
-							<sei>org.example.helloservice.impl.Cook</sei>
-						</configuration>
-					</execution>
 				</executions>
 			</plugin>
 			<plugin>
