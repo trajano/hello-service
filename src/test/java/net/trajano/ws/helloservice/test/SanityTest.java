@@ -1,4 +1,4 @@
-package net.trajano.webservice;
+package net.trajano.ws.helloservice.test;
 
 import org.junit.Assert;
 import org.junit.Test;
