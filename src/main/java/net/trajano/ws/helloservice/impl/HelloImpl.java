@@ -16,8 +16,6 @@ public class HelloImpl implements Hello {
 
 	@Override
 	public SayHelloResponse sayHello(final SayHello parameters) {
-		System.out.println("got " + parameters.getIn() + " for object "
-				+ hashCode());
 		final SayHelloResponse r = new SayHelloResponse();
 		r.setOut("{{" + getHelloString() + parameters.getIn());
 		return r;
@@ -25,7 +23,6 @@ public class HelloImpl implements Hello {
 
 	@Required
 	public void setHelloString(final String helloString) {
-		System.out.println("INJECTION INVOKED " + helloString);
 		this.helloString = helloString;
 	}
 
