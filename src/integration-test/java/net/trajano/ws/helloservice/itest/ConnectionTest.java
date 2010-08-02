@@ -1,5 +1,9 @@
 package net.trajano.ws.helloservice.itest;
 
+import java.net.URL;
+
+import javax.xml.namespace.QName;
+
 import junit.framework.Assert;
 import net.trajano.ws.helloservice.Hello;
 import net.trajano.ws.helloservice.HelloService;
@@ -18,7 +22,10 @@ import org.junit.Test;
 public class ConnectionTest {
 	@Test
 	public void testSomething() throws Exception {
-		final Hello h = new HelloService().getHelloPort();
+		final Hello h = new HelloService(new URL(
+				"http://localhost:8080/Hello/Hello?wsdl"), new QName(
+				"http://ws.trajano.net/HelloService/", "HelloServiceService"))
+				.getHelloPort();
 		final SayHello parameters = new SayHello();
 		parameters.setIn("abc");
 		final SayHelloResponse sayHello = h.sayHello(parameters);
