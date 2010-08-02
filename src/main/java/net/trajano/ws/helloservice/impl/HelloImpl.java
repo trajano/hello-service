@@ -1,11 +1,14 @@
 package net.trajano.ws.helloservice.impl;
 
+import javax.jws.WebService;
+
 import net.trajano.ws.helloservice.Hello;
 import net.trajano.ws.helloservice.SayHello;
 import net.trajano.ws.helloservice.SayHelloResponse;
 
 import org.springframework.beans.factory.annotation.Required;
 
+@WebService(name = "Hello", portName = "HelloPort", endpointInterface = "net.trajano.ws.helloservice.Hello", targetNamespace = "http://ws.trajano.net/HelloService/")
 public class HelloImpl implements Hello {
 
 	private String helloString;
