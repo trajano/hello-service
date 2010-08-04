@@ -1,5 +1,9 @@
 package net.trajano.ws.helloservice.itest;
 
+import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
+import javax.xml.ws.soap.SOAPBinding;
+
 import junit.framework.Assert;
 import net.trajano.ws.helloservice.Hello;
 import net.trajano.ws.helloservice.HelloService;
@@ -20,6 +24,22 @@ public class ConnectionTest {
 	public void testSomething() throws Exception {
 		final HelloService helloService = new HelloService();
 		final Hello h = helloService.getDevPort();
+		final SayHello parameters = new SayHello();
+		parameters.setIn("abc");
+		final SayHelloResponse sayHello = h.sayHello(parameters);
+		Assert.assertEquals("{{HelloStrinCXFabc", sayHello.getOut());
+	}
+
+	@Test
+	public void testSomethingElse() throws Exception {
+		final Service helloService = Service.create(new QName(
+				"http://ws.trajano.net/HelloService/"));
+		helloService.addPort(new QName("http://ws.trajano.net/HelloService/",
+				"GeronimoPort"), SOAPBinding.SOAP11HTTP_BINDING,
+				"http://localhost:8080/Hello/Hello");
+		final Hello h = helloService.getPort(new QName(
+				"http://ws.trajano.net/HelloService/", "GeronimoPort"),
+				Hello.class);
 		final SayHello parameters = new SayHello();
 		parameters.setIn("abc");
 		final SayHelloResponse sayHello = h.sayHello(parameters);
