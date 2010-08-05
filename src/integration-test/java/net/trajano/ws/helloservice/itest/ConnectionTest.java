@@ -1,5 +1,7 @@
 package net.trajano.ws.helloservice.itest;
 
+import javax.xml.ws.BindingProvider;
+
 import junit.framework.Assert;
 import net.trajano.ws.helloservice.Hello;
 import net.trajano.ws.helloservice.HelloService;
@@ -18,10 +20,24 @@ import org.junit.Test;
 public class ConnectionTest {
 	@Test
 	public void testSomething() throws Exception {
-		final Hello h = new HelloService().getHelloPort();
+		final HelloService helloService = new HelloService();
+		final Hello h = helloService.getDevPort();
 		final SayHello parameters = new SayHello();
 		parameters.setIn("abc");
 		final SayHelloResponse sayHello = h.sayHello(parameters);
-		Assert.assertEquals("{{HelloStrinCXFabc", sayHello.getOut());
+		Assert.assertEquals("{{webxmlabc", sayHello.getOut());
+	}
+
+	@Test
+	public void testSomethingElse() throws Exception {
+		final HelloService helloService = new HelloService();
+		final Hello h = helloService.getDevPort();
+		((BindingProvider) h).getRequestContext().put(
+				BindingProvider.ENDPOINT_ADDRESS_PROPERTY,
+				"http://localhost:8080/Hello/Hello");
+		final SayHello parameters = new SayHello();
+		parameters.setIn("abc");
+		final SayHelloResponse sayHello = h.sayHello(parameters);
+		Assert.assertEquals("{{webxmlabc", sayHello.getOut());
 	}
 }
