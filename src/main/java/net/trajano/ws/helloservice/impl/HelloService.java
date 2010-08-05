@@ -1,5 +1,6 @@
 package net.trajano.ws.helloservice.impl;
 
+import javax.annotation.Resource;
 import javax.jws.WebService;
 
 import net.trajano.ws.helloservice.Hello;
@@ -10,7 +11,7 @@ import org.springframework.beans.factory.annotation.Required;
 
 @WebService(name = "Hello", portName = "HelloPort", endpointInterface = "net.trajano.ws.helloservice.Hello", targetNamespace = "http://ws.trajano.net/HelloService/")
 public class HelloService implements Hello {
-
+	@Resource
 	private String helloString;
 
 	public String getHelloString() {
@@ -26,6 +27,7 @@ public class HelloService implements Hello {
 
 	@Required
 	public void setHelloString(final String helloString) {
+		System.out.println("inject " + helloString);
 		this.helloString = helloString;
 	}
 

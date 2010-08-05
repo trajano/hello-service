@@ -4,18 +4,6 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5" metadata-complete="true" id="Hello">
 	<display-name>hello-service</display-name>
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>
-      		classpath:META-INF/cxf/cxf.xml
-      		classpath:META-INF/cxf/cxf-extension-soap.xml
-      		classpath:META-INF/cxf/cxf-servlet.xml
-     	</param-value>
-	</context-param>
-
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
 
 	<servlet>
 		<servlet-name>Hello</servlet-name>
@@ -27,5 +15,13 @@
 		<servlet-name>Hello</servlet-name>
 		<url-pattern>/Hello</url-pattern>
 	</servlet-mapping>
-
+	<env-entry>
+		<env-entry-name>helloString</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>webxml</env-entry-value>
+		<injection-target>
+			<injection-target-class>net.trajano.ws.helloservice.impl.HelloService</injection-target-class>
+			<injection-target-name>helloString</injection-target-name>
+		</injection-target>
+	</env-entry>
 </web-app>
