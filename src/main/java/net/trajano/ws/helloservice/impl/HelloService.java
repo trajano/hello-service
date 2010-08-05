@@ -7,8 +7,6 @@ import net.trajano.ws.helloservice.Hello;
 import net.trajano.ws.helloservice.SayHello;
 import net.trajano.ws.helloservice.SayHelloResponse;
 
-import org.springframework.beans.factory.annotation.Required;
-
 @WebService(name = "Hello", portName = "HelloPort", endpointInterface = "net.trajano.ws.helloservice.Hello", targetNamespace = "http://ws.trajano.net/HelloService/")
 public class HelloService implements Hello {
 	@Resource
@@ -25,7 +23,6 @@ public class HelloService implements Hello {
 		return r;
 	}
 
-	@Required
 	public void setHelloString(final String helloString) {
 		System.out.println("inject " + helloString);
 		this.helloString = helloString;

@@ -25,7 +25,7 @@ public class ConnectionTest {
 		final SayHello parameters = new SayHello();
 		parameters.setIn("abc");
 		final SayHelloResponse sayHello = h.sayHello(parameters);
-		Assert.assertEquals("{{HelloStrinCXFabc", sayHello.getOut());
+		Assert.assertEquals("{{webxmlabc", sayHello.getOut());
 	}
 
 	@Test
@@ -38,6 +38,6 @@ public class ConnectionTest {
 		final SayHello parameters = new SayHello();
 		parameters.setIn("abc");
 		final SayHelloResponse sayHello = h.sayHello(parameters);
-		Assert.assertEquals("{{HelloStrinCXFabc", sayHello.getOut());
+		Assert.assertEquals("{{webxmlabc", sayHello.getOut());
 	}
 }
