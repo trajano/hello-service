@@ -28,6 +28,12 @@ public class ConnectionTest {
 		Assert.assertEquals("{{webxmlabc", sayHello.getOut());
 	}
 
+	/**
+	 * This unit test shows how to connect to an arbitrary endpoint that is not
+	 * defined in the WSDL.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testSomethingElse() throws Exception {
 		final HelloService helloService = new HelloService();
