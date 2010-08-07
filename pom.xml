@@ -15,6 +15,22 @@
 	<build>
 		<plugins>
 			<plugin>
+    <groupId>org.apache.geronimo.buildsupport</groupId>
+    <artifactId>geronimo-maven-plugin</artifactId>
+    <version>2.2</version>
+				<configuration>
+					<assemblies>
+						<assembly>
+<groupId>org.apache.geronimo.assemblies</groupId>
+    <artifactId>geronimo-jetty7-javaee5</artifactId>
+							<version>2.2</version>
+							<classifier>bin</classifier>
+							<type>zip</type>
+						</assembly>
+					</assemblies>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>

@@ -25,7 +25,7 @@ public class ConnectionTest {
 		final SayHello parameters = new SayHello();
 		parameters.setIn("abc");
 		final SayHelloResponse sayHello = h.sayHello(parameters);
-		Assert.assertEquals("{{webxmlabc", sayHello.getOut());
+		Assert.assertEquals("{{HelloStrinCXFabc", sayHello.getOut());
 	}
 
 	/**
@@ -40,10 +40,10 @@ public class ConnectionTest {
 		final Hello h = helloService.getDevPort();
 		((BindingProvider) h).getRequestContext().put(
 				BindingProvider.ENDPOINT_ADDRESS_PROPERTY,
-				"http://localhost:8080/Hello/Hello");
+				"http://localhost:8080/hello-service/hello");
 		final SayHello parameters = new SayHello();
 		parameters.setIn("abc");
 		final SayHelloResponse sayHello = h.sayHello(parameters);
-		Assert.assertEquals("{{webxmlabc", sayHello.getOut());
+		Assert.assertEquals("{{HelloStrinCXFabc", sayHello.getOut());
 	}
 }
