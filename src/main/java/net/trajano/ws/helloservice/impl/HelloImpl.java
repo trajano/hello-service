@@ -31,7 +31,7 @@ public class HelloImpl implements Hello {
 	 * running in a shared class loader environment.</li>
 	 * </ul>
 	 */
-	private final Log log = LogFactory.getLog(HelloImpl.class);
+	private final Log log = LogFactory.getLog(this.getClass());
 
 	public String getHelloString() {
 		return helloString;
