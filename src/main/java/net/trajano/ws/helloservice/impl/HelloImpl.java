@@ -11,6 +11,26 @@ import org.springframework.beans.factory.annotation.Required;
 public class HelloImpl implements Hello {
 
 	private String helloString;
+	/**
+	 * <p>
+	 * Logger. Personal preference is to use private final non-static loggers.
+	 * Current logging frameworks do not make a preference for either. Here are
+	 * my reasons:
+	 * </p>
+	 * <ul>
+	 * <li><code>private</code>, as opposed to <code>protected</code> ensures
+	 * that the scope of the logger object does not go outside the class. The
+	 * logger I use for development and debugging should only log for itself,
+	 * not its subclasses. It also prevents namespace pollution.</li>
+	 * <li><code>final</code>, since I do not intend to change the logger I use
+	 * for the lifetime of the object.</li>
+	 * <li>non-<code>static</code>, this helps prevent any class loading issues
+	 * that may or may not be present in the logging framework I am using.
+	 * Although there is a penalty for object creation, the cost of creation is
+	 * going to be less than the headaches someone may have to deal with when
+	 * running in a shared class loader environment.</li>
+	 * </ul>
+	 */
 	private final Log log = LogFactory.getLog(HelloImpl.class);
 
 	public String getHelloString() {
