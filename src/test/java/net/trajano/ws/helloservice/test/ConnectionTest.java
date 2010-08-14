@@ -48,7 +48,7 @@ public class ConnectionTest extends AbstractCXFSpringTest {
 	 */
 	@Test
 	@Ignore
-	public void testSomethingElse() throws Exception {
+	public void switchEndpointForGlassfish() throws Exception {
 		final HelloService helloService = new HelloService();
 		final Hello h = helloService.getDevPort();
 		((BindingProvider) h).getRequestContext().put(
