@@ -42,7 +42,7 @@ public class ConnectionTest extends AbstractCXFSpringTest {
 
 	/**
 	 * This unit test shows how to connect to an arbitrary endpoint that is not
-	 * defined in the WSDL. This is used when testing on Glassfish
+	 * defined in the WSDL. This is used when testing on Glassfish.
 	 * 
 	 * @throws Exception
 	 */
