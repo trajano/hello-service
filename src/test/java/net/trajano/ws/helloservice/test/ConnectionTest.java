@@ -7,12 +7,9 @@ import net.trajano.ws.helloservice.Hello;
 import net.trajano.ws.helloservice.HelloService;
 import net.trajano.ws.helloservice.SayHello;
 import net.trajano.ws.helloservice.SayHelloResponse;
-import net.trajano.ws.helloservice.impl.HelloImpl;
 
-import org.apache.cxf.endpoint.Server;
-import org.apache.cxf.frontend.ServerFactoryBean;
-import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
 import org.apache.cxf.test.AbstractCXFSpringTest;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -34,30 +31,23 @@ public class ConnectionTest extends AbstractCXFSpringTest {
 	}
 
 	@Test
-	public void testSomething() throws Exception {
-
-		// Create an HTTP endpoint
-		final ServerFactoryBean sfb = new JaxWsServerFactoryBean();
-		sfb.setServiceClass(HelloImpl.class);
-		sfb.setAddress("http://localhost:9001/Hello");
-		// sfb.setDestinationFactory(destinationFactory)
-		final Server server = sfb.create();
-
+	public void getFromSpring() throws Exception {
 		final HelloService helloService = new HelloService();
 		final Hello h = helloService.getDevPort();
-		final SayHello parameters = new SayHello();
-		parameters.setIn("abc");
-		final SayHelloResponse sayHello = h.sayHello(parameters);
-		Assert.assertEquals("{{HelloStrinCXFabc", sayHello.getOut());
+		final SayHello req = new SayHello();
+		req.setIn("abc");
+		final SayHelloResponse sayHello = h.sayHello(req);
+		Assert.assertEquals("{{CxfTestabc", sayHello.getOut());
 	}
 
 	/**
 	 * This unit test shows how to connect to an arbitrary endpoint that is not
-	 * defined in the WSDL.
+	 * defined in the WSDL. This is used when testing on Glassfish
 	 * 
 	 * @throws Exception
 	 */
 	@Test
+	@Ignore
 	public void testSomethingElse() throws Exception {
 		final HelloService helloService = new HelloService();
 		final Hello h = helloService.getDevPort();

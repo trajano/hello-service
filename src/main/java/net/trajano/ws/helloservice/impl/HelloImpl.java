@@ -39,6 +39,7 @@ public class HelloImpl implements Hello {
 
 	@Override
 	public SayHelloResponse sayHello(final SayHello parameters) {
+		log.debug("Saying Hello");
 		final SayHelloResponse r = new SayHelloResponse();
 		r.setOut("{{" + getHelloString() + parameters.getIn());
 		return r;

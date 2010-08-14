@@ -15,7 +15,7 @@
 	<jaxws:endpoint address="/hello">
 		<jaxws:implementor>
 			<bean class="net.trajano.ws.helloservice.impl.HelloImpl">
-				<property name="helloString" value="CxfTest" />
+				<property name="helloString" value="HelloStrinCXF" />
 			</bean>
 		</jaxws:implementor>
 	</jaxws:endpoint>
