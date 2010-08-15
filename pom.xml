@@ -23,6 +23,22 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<additionalProjectFacets>
+						<java>1.6</java>
+						<jst.web>2.5</jst.web>
+						<wst.jsdt.web>1.0</wst.jsdt.web>
+					</additionalProjectFacets>
+					<additionalProjectnatures>
+						<projectnature>
+							org.eclipse.wst.common.project.facet.core.nature
+                        </projectnature>
+					</additionalProjectnatures>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxws-maven-plugin</artifactId>
 				<version>1.10</version>
@@ -36,11 +52,6 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>7.1.5.v20100705</version>
 			</plugin>
 		</plugins>
 	</build>
@@ -93,12 +104,12 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-    <groupId>org.apache.cxf</groupId>
-    <artifactId>cxf-rt-transports-http-jetty</artifactId>
-    <version>2.2.9</version>
-    <scope>test</scope>
-</dependency>
-		
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http-jetty</artifactId>
+			<version>2.2.9</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 	<reporting>
 		<plugins>
