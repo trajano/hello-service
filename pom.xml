@@ -8,6 +8,11 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<description>This archetype is for contract first web services that are using Spring to inject data.</description>
 	<inceptionYear>2010</inceptionYear>
+	<scm>
+		<connection>scm:git:git://github.com/trajano/hello-service.git</connection>
+		<developerConnection>git@github.com:trajano/hello-service.git</developerConnection>
+		<url>http://github.com/trajano/hello-service</url>
+	</scm>
 	<organization>
 		<name>trajano.net</name>
 		<url>http://www.trajano.net/</url>
@@ -56,17 +61,22 @@
 		</plugins>
 	</build>
 	<dependencies>
+
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-frontend-jaxws</artifactId>
 			<version>2.2.9</version>
+			<type>jar</type>
 			<scope>runtime</scope>
+			<optional>false</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-transports-http</artifactId>
 			<version>2.2.9</version>
+			<type>jar</type>
 			<scope>runtime</scope>
+			<optional>false</optional>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -74,6 +84,7 @@
 			<version>4.8.1</version>
 			<type>jar</type>
 			<scope>test</scope>
+			<optional>false</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -81,6 +92,7 @@
 			<version>2.5.6</version>
 			<type>jar</type>
 			<scope>runtime</scope>
+			<optional>false</optional>
 		</dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>
@@ -88,6 +100,7 @@
 			<version>1.1.1</version>
 			<type>jar</type>
 			<scope>compile</scope>
+			<optional>false</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -95,6 +108,7 @@
 			<version>2.5.6</version>
 			<type>jar</type>
 			<scope>compile</scope>
+			<optional>false</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -102,14 +116,16 @@
 			<version>2.5.6</version>
 			<type>jar</type>
 			<scope>compile</scope>
+			<optional>false</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-transports-http-jetty</artifactId>
 			<version>2.2.9</version>
+			<type>jar</type>
 			<scope>test</scope>
+			<optional>false</optional>
 		</dependency>
-
 	</dependencies>
 	<reporting>
 		<plugins>
