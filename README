@@ -1,1 +1,5 @@
 When you checkout the project from GIT before using, run mvn package.
+
+Maven integration still sucks for Eclipse when doing anything that deals with
+facets such as dynamic web projects.  However, it is still better than
+maintaining extra code (i.e. Ant build files).
