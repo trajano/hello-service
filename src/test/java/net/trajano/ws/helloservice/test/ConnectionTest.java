@@ -1,4 +1,4 @@
-package net.trajano.ws.helloservice.itest;
+package net.trajano.ws.helloservice.test;
 
 import javax.xml.ws.BindingProvider;
 
@@ -8,6 +8,8 @@ import net.trajano.ws.helloservice.HelloService;
 import net.trajano.ws.helloservice.SayHello;
 import net.trajano.ws.helloservice.SayHelloResponse;
 
+import org.apache.cxf.test.AbstractCXFSpringTest;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -17,25 +19,36 @@ import org.junit.Test;
  * @author Archimedes Trajano <arch@trajano.net>
  * 
  */
-public class ConnectionTest {
+public class ConnectionTest extends AbstractCXFSpringTest {
 	@Test
-	public void testSomething() throws Exception {
+	public void doNothing() {
+
+	}
+
+	@Override
+	protected String[] getConfigLocations() {
+		return new String[] { "classpath:cxf-beans.xml" };
+	}
+
+	@Test
+	public void getFromSpring() throws Exception {
 		final HelloService helloService = new HelloService();
 		final Hello h = helloService.getDevPort();
-		final SayHello parameters = new SayHello();
-		parameters.setIn("abc");
-		final SayHelloResponse sayHello = h.sayHello(parameters);
-		Assert.assertEquals("{{HelloStrinCXFabc", sayHello.getOut());
+		final SayHello req = new SayHello();
+		req.setIn("abc");
+		final SayHelloResponse sayHello = h.sayHello(req);
+		Assert.assertEquals("{{CxfTestabc", sayHello.getOut());
 	}
 
 	/**
 	 * This unit test shows how to connect to an arbitrary endpoint that is not
-	 * defined in the WSDL.
+	 * defined in the WSDL. This is used when testing on Glassfish.
 	 * 
 	 * @throws Exception
 	 */
 	@Test
-	public void testSomethingElse() throws Exception {
+	@Ignore
+	public void switchEndpointForGlassfish() throws Exception {
 		final HelloService helloService = new HelloService();
 		final Hello h = helloService.getDevPort();
 		((BindingProvider) h).getRequestContext().put(
