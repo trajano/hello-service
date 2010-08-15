@@ -31,3 +31,8 @@ those than need to test integration for a deployed project.
 * Web Service EAR.  This will contain multiple web service container projects.
 Ideally the versioning should be based on a release schedule be it by year
 or half year (like Ubuntu) or monthly (if you do things that quickly).
+
+There is no such thing as a client project.  Unlike Stateless Session Beans,
+WSDL already provides the information to build the client and the interface
+for any language that supports it.  Therefore, don't add any more work for
+yourself.
