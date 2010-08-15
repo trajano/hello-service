@@ -1,0 +1,1 @@
+When you checkout the project from GIT before using, run mvn package.
