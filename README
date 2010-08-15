@@ -3,3 +3,28 @@ When you checkout the project from GIT before using, run mvn package.
 Maven integration still sucks for Eclipse when doing anything that deals with
 facets such as dynamic web projects.  However, it is still better than
 maintaining extra code (i.e. Ant build files).
+
+For real-life, I would recommend Maven to bootstrap the project, then
+use Ant to do the builds, because there are more people who know Ant than
+Maven (caters to the lower denominator).  I would still try to use the Maven
+source structures if possible, at least on Eclipse it works.
+
+This example project lumps all levels (service implementation, service
+interface, integration test) in one project.  This is not recommended for
+real-life.  I would break things up in the following way:
+
+* Web Service container project.  This will contain all the web services for 
+the enterprise (?).  Here you would have the CXF servlet and cxf-servlet.xml
+files.  You would have the final bean configuration done here as well.
+WSDL and XSD contracts are also stored here.
+
+Ideally the grouping should be one per enterprise group.
+
+* Service Implementation project.  This will contain only the implementation
+of a service class.  Ideally one WSDL implementation per Service
+Implementation project.  It uses wsimport to generate the interface code
+from a request to a deployed web service container project.
+
+* Web Service EAR.  This will contain multiple web service container projects.
+Ideally the versioning should be based on a release schedule be it by year
+or half year (like Ubuntu) or monthly (if you do things that quickly).
