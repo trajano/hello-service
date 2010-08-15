@@ -44,6 +44,8 @@
                         </projectnature>
 					</additionalProjectnatures>
 				</configuration>
+				<extensions>false</extensions>
+				<inherited>false</inherited>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
