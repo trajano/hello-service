@@ -29,6 +29,15 @@
 					</xsd:all>
 				</xsd:complexType>
 			</xsd:element>
+			<xsd:element name="SayHelloFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SayHelloFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
 		</xsd:schema>
 	</wsdl:types>
 	<wsdl:message name="SayHelloRequest">
@@ -40,13 +49,18 @@
 		<wsdl:documentation>resposnse parameters for the response</wsdl:documentation>
 		<wsdl:part name="parameters" element="tns:SayHelloResponse"></wsdl:part>
 	</wsdl:message>
+	<wsdl:message name="SayHelloFault">
+		<wsdl:part name="parameters" element="tns:SayHelloFault"></wsdl:part>
+	</wsdl:message>
 	<wsdl:portType name="Hello">
 		<wsdl:documentation>Hello world sample</wsdl:documentation>
 		<wsdl:operation name="SayHello">
-			<wsdl:documentation>Say Hello Operatio</wsdl:documentation>
+			<wsdl:documentation>Say Hello Operation</wsdl:documentation>
 			<wsdl:input message="tns:SayHelloRequest"></wsdl:input>
 			<wsdl:output message="tns:SayHelloResponse"></wsdl:output>
-		</wsdl:operation>
+            <wsdl:fault name="fault" message="tns:SayHelloFault">
+            	<wsdl:documentation>Fault type</wsdl:documentation></wsdl:fault>
+        </wsdl:operation>
 	</wsdl:portType>
 	<wsdl:binding name="HelloBinding" type="tns:Hello">
 		<soap:binding style="document"
