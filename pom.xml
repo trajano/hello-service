@@ -10,7 +10,7 @@
 	<inceptionYear>2010</inceptionYear>
 	<scm>
 		<connection>scm:git:git://github.com/trajano/hello-service.git</connection>
-		<developerConnection>git@github.com:trajano/hello-service.git</developerConnection>
+		<developerConnection>scm:git:git@github.com:trajano/hello-service.git</developerConnection>
 		<url>http://github.com/trajano/hello-service</url>
 	</scm>
 	<organization>
