@@ -55,7 +55,7 @@
 	<wsdl:portType name="Hello">
 		<wsdl:documentation>Hello world sample</wsdl:documentation>
 		<wsdl:operation name="SayHello">
-			<wsdl:documentation>Say Hello Operation</wsdl:documentation>
+			<wsdl:documentation>Say Hello Operation.  Throws a fault if the input message is &quot;fault&quot;</wsdl:documentation>
 			<wsdl:input message="tns:SayHelloRequest"></wsdl:input>
 			<wsdl:output message="tns:SayHelloResponse"></wsdl:output>
             <wsdl:fault name="fault" message="tns:SayHelloFault">
@@ -74,6 +74,9 @@
 			<wsdl:output>
 				<soap:body use="literal" />
 			</wsdl:output>
+			<wsdl:fault name="fault">
+				<soap:fault use="literal" name="fault" />
+			</wsdl:fault>
 		</wsdl:operation>
 	</wsdl:binding>
 	<wsdl:service name="HelloService">

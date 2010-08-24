@@ -2,6 +2,8 @@ package net.trajano.ws.helloservice.impl;
 
 import net.trajano.ws.helloservice.Hello;
 import net.trajano.ws.helloservice.SayHello;
+import net.trajano.ws.helloservice.SayHelloFault;
+import net.trajano.ws.helloservice.SayHelloFault_Exception;
 import net.trajano.ws.helloservice.SayHelloResponse;
 
 import org.apache.commons.logging.Log;
@@ -38,8 +40,13 @@ public class HelloImpl implements Hello {
 	}
 
 	@Override
-	public SayHelloResponse sayHello(final SayHello parameters) {
+	public SayHelloResponse sayHello(final SayHello parameters)
+			throws SayHelloFault_Exception {
 		log.debug("Saying Hello");
+		if ("fault".equals(parameters.getIn())) {
+			throw new SayHelloFault_Exception("got a hello fault",
+					new SayHelloFault());
+		}
 		final SayHelloResponse r = new SayHelloResponse();
 		r.setOut("{{" + getHelloString() + parameters.getIn());
 		return r;

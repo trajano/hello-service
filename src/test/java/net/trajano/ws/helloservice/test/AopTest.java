@@ -10,13 +10,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class AopTest {
 	@Test
-	public void noAopSanity() {
+	public void noAopSanity() throws Exception {
 		final Hello p = new HelloImpl();
 		p.sayHello(new SayHello());
 	}
 
 	@Test
-	public void withAop() {
+	public void withAop() throws Exception {
 		final ApplicationContext ctx = new ClassPathXmlApplicationContext(
 				"beans-aop.xml");
 		final Hello p = (Hello) ctx.getBean("hello");
