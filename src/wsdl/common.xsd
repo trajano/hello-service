@@ -188,4 +188,6 @@
 			<minInclusive value="0"></minInclusive>
 		</restriction>
 	</simpleType>
+
+	<element name="ApplicationFault" type="tns:ApplicationFaultType"></element>
 </schema>

@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://www.example.org/business"
-	xmlns:tns="http://www.example.org/business"
-	elementFormDefault="qualified"
-	xmlns:pref="http://ws.trajano.net/schema/common">
+<schema targetNamespace="http://ws.trajano.net/schema/business"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ws.trajano.net/schema/business" xmlns:pref="http://ws.trajano.net/schema/common">
 	<import schemaLocation="common.xsd"
 		namespace="http://ws.trajano.net/schema/common">
 	</import>
 
 	<complexType name="BaseType">
 		<sequence>
-			<element name="NewElement" type="string" maxOccurs="1"
+			<element name="Message" type="string" maxOccurs="1"
 				minOccurs="0">
 			</element>
 			<element name="OtherElement" type="string"></element>
@@ -22,7 +19,7 @@
 		<complexContent>
             <restriction base="tns:BaseType">
 				<sequence>
-					<element name="NewElement" maxOccurs="1"
+					<element name="Message" maxOccurs="1"
 						minOccurs="1">
 						<simpleType>
 							<restriction base="string">
@@ -36,4 +33,10 @@
             </restriction>
 		</complexContent>
 	</complexType>
+
+	<element name="HelloRequest" type="tns:BaseType"></element>
+
+	<element name="HelloResponse" type="tns:DerivedType"></element>
+
+	<element name="ApplicationFault" type="pref:ApplicationFaultType"></element>
 </schema>

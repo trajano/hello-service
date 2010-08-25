@@ -1,16 +1,16 @@
 package net.trajano.ws.helloservice.test;
 
 import net.trajano.ws.helloservice.Hello;
-import net.trajano.ws.helloservice.SayHello;
-import net.trajano.ws.helloservice.SayHelloFault_Exception;
-import net.trajano.ws.helloservice.SayHelloResponse;
+import net.trajano.ws.helloservice.SayHelloFault;
 import net.trajano.ws.helloservice.impl.HelloImpl;
+import net.trajano.ws.schema.business.BaseType;
+import net.trajano.ws.schema.business.DerivedType;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 public class SanityTest {
-	@Test(expected = SayHelloFault_Exception.class)
+	@Test(expected = SayHelloFault.class)
 	public void doFault() throws Exception {
 		final Hello h;
 		{
@@ -18,8 +18,8 @@ public class SanityTest {
 			impl.setHelloString("ABC");
 			h = impl;
 		}
-		final SayHello parameters = new SayHello();
-		parameters.setIn("fault");
+		final BaseType parameters = new DerivedType();
+		parameters.setOtherElement("fault");
 		h.sayHello(parameters);
 	}
 
@@ -31,10 +31,10 @@ public class SanityTest {
 			impl.setHelloString("ABC");
 			h = impl;
 		}
-		final SayHello parameters = new SayHello();
-		parameters.setIn("abc");
-		final SayHelloResponse sayHello = h.sayHello(parameters);
-		Assert.assertEquals("{{ABCabc", sayHello.getOut());
+		final BaseType parameters = new DerivedType();
+		parameters.setMessage("abc");
+		final DerivedType resp = h.sayHello(parameters);
+		Assert.assertEquals("{{ABCabc", resp.getSomeOther());
 	}
 
 	@Test

@@ -5,8 +5,8 @@ import javax.xml.ws.BindingProvider;
 import junit.framework.Assert;
 import net.trajano.ws.helloservice.Hello;
 import net.trajano.ws.helloservice.HelloService;
-import net.trajano.ws.helloservice.SayHello;
-import net.trajano.ws.helloservice.SayHelloResponse;
+import net.trajano.ws.schema.business.BaseType;
+import net.trajano.ws.schema.business.DerivedType;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -34,9 +34,9 @@ public class GlassFishTest {
 		((BindingProvider) h).getRequestContext().put(
 				BindingProvider.ENDPOINT_ADDRESS_PROPERTY,
 				"http://localhost:8080/hello-service/hello");
-		final SayHello parameters = new SayHello();
-		parameters.setIn("abc");
-		final SayHelloResponse sayHello = h.sayHello(parameters);
-		Assert.assertEquals("{{HelloStrinCXFabc", sayHello.getOut());
+		final BaseType parameters = new BaseType();
+		parameters.setMessage("abc");
+		final DerivedType sayHello = h.sayHello(parameters);
+		Assert.assertEquals("{{HelloStrinCXFabc", sayHello.getSomeOther());
 	}
 }

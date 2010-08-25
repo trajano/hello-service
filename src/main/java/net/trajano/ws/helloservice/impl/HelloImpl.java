@@ -1,10 +1,10 @@
 package net.trajano.ws.helloservice.impl;
 
 import net.trajano.ws.helloservice.Hello;
-import net.trajano.ws.helloservice.SayHello;
 import net.trajano.ws.helloservice.SayHelloFault;
-import net.trajano.ws.helloservice.SayHelloFault_Exception;
-import net.trajano.ws.helloservice.SayHelloResponse;
+import net.trajano.ws.schema.business.BaseType;
+import net.trajano.ws.schema.business.DerivedType;
+import net.trajano.ws.schema.common.ApplicationFaultType;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -40,15 +40,14 @@ public class HelloImpl implements Hello {
 	}
 
 	@Override
-	public SayHelloResponse sayHello(final SayHello parameters)
-			throws SayHelloFault_Exception {
+	public DerivedType sayHello(final BaseType parameters) throws SayHelloFault {
 		log.debug("Saying Hello");
-		if ("fault".equals(parameters.getIn())) {
-			throw new SayHelloFault_Exception("got a hello fault",
-					new SayHelloFault());
+		if ("fault".equals(parameters.getOtherElement())) {
+			throw new SayHelloFault("got a hello fault",
+					new ApplicationFaultType());
 		}
-		final SayHelloResponse r = new SayHelloResponse();
-		r.setOut("{{" + getHelloString() + parameters.getIn());
+		final DerivedType r = new DerivedType();
+		r.setSomeOther("{{" + getHelloString() + parameters.getMessage());
 		return r;
 	}
 
