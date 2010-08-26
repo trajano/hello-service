@@ -31,27 +31,13 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
-				<configuration>
-					<additionalProjectFacets>
-						<java>1.6</java>
-						<jst.web>2.5</jst.web>
-						<wst.jsdt.web>1.0</wst.jsdt.web>
-					</additionalProjectFacets>
-					<additionalProjectnatures>
-						<projectnature>
-							org.eclipse.wst.common.project.facet.core.nature
-                        </projectnature>
-					</additionalProjectnatures>
-				</configuration>
-				<extensions>false</extensions>
-				<inherited>false</inherited>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxws-maven-plugin</artifactId>
 				<version>1.10</version>
 				<configuration>
-<wsdlDirectory>${basedir}/src/main/resources/META-INF//wsdl</wsdlDirectory>
+					<wsdlDirectory>${basedir}/src/main/resources/META-INF//wsdl</wsdlDirectory>
 				</configuration>
 				<executions>
 					<execution>
@@ -103,14 +89,6 @@
 			<version>4.8.1</version>
 			<type>jar</type>
 			<scope>test</scope>
-			<optional>false</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>2.5.6</version>
-			<type>jar</type>
-			<scope>runtime</scope>
 			<optional>false</optional>
 		</dependency>
 		<dependency>
