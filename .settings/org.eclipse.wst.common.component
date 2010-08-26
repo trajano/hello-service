@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="hello-service">
-        <wb-resource deploy-path="/" source-path="/target/hello-service"/>
         <property name="context-root" value="hello-service"/>
         <property name="java-output-path" value="/hello-service/target/classes"/>
     </wb-module>

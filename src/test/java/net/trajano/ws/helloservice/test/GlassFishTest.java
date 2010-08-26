@@ -8,8 +8,9 @@ import net.trajano.ws.helloservice.HelloService;
 import net.trajano.ws.helloservice.SayHello;
 import net.trajano.ws.helloservice.SayHelloResponse;
 
-import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * These are Unit tests done on Glassfish. Ideally this class would be a
@@ -18,7 +19,6 @@ import org.junit.Test;
  * @author Archimedes Trajano <arch@trajano.net>
  * 
  */
-@Ignore
 public class GlassFishTest {
 
 	/**
@@ -38,5 +38,11 @@ public class GlassFishTest {
 		parameters.setIn("abc");
 		final SayHelloResponse sayHello = h.sayHello(parameters);
 		Assert.assertEquals("{{HelloStrinCXFabc", sayHello.getOut());
+	}
+
+	@Test
+	public void useJasWsProxy() throws Exception {
+		final ApplicationContext context = new ClassPathXmlApplicationContext(
+				"jaxwsproxy-beans.xml");
 	}
 }
