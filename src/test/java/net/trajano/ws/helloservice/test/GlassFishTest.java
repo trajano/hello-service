@@ -8,6 +8,7 @@ import net.trajano.ws.helloservice.HelloService;
 import net.trajano.ws.schema.business.BaseType;
 import net.trajano.ws.schema.business.DerivedType;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -19,6 +20,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author Archimedes Trajano <arch@trajano.net>
  * 
  */
+@Ignore
 public class GlassFishTest {
 
 	/**
@@ -45,5 +47,9 @@ public class GlassFishTest {
 		final ApplicationContext context = new ClassPathXmlApplicationContext(
 				"jaxwsproxy-beans.xml");
 		final Hello h = (Hello) context.getBean("service");
+		final BaseType parameters = new BaseType();
+		parameters.setMessage("abc");
+		final DerivedType sayHello = h.sayHello(parameters);
+		Assert.assertEquals("{{HelloStrinCXFabc", sayHello.getSomeOther());
 	}
 }
