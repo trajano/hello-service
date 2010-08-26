@@ -44,5 +44,6 @@ public class GlassFishTest {
 	public void useJasWsProxy() throws Exception {
 		final ApplicationContext context = new ClassPathXmlApplicationContext(
 				"jaxwsproxy-beans.xml");
+		final Hello h = (Hello) context.getBean("service");
 	}
 }
