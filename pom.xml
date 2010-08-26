@@ -58,6 +58,7 @@
 							<goal>wsimport</goal>
 						</goals>
 						<configuration>
+							<wsdlDirectory>${basedir}/src/main/webapp/wsdl</wsdlDirectory>
 						</configuration>
 					</execution>
 				</executions>

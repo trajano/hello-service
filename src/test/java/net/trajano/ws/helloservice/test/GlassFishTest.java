@@ -8,7 +8,6 @@ import net.trajano.ws.helloservice.HelloService;
 import net.trajano.ws.schema.business.BaseType;
 import net.trajano.ws.schema.business.DerivedType;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -20,7 +19,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author Archimedes Trajano <arch@trajano.net>
  * 
  */
-@Ignore
+// @Ignore
 public class GlassFishTest {
 
 	/**
@@ -35,7 +34,7 @@ public class GlassFishTest {
 		final Hello h = helloService.getDevPort();
 		((BindingProvider) h).getRequestContext().put(
 				BindingProvider.ENDPOINT_ADDRESS_PROPERTY,
-				"http://localhost:8080/hello-service/hello");
+				"http://localhost:8080/hello-service/services/hello");
 		final BaseType parameters = new BaseType();
 		parameters.setMessage("abc");
 		final DerivedType sayHello = h.sayHello(parameters);
@@ -47,6 +46,17 @@ public class GlassFishTest {
 		final ApplicationContext context = new ClassPathXmlApplicationContext(
 				"jaxwsproxy-beans.xml");
 		final Hello h = (Hello) context.getBean("service");
+		final BaseType parameters = new BaseType();
+		parameters.setMessage("abc");
+		final DerivedType sayHello = h.sayHello(parameters);
+		Assert.assertEquals("{{HelloStrinCXFabc", sayHello.getSomeOther());
+	}
+
+	@Test
+	public void useJasWsProxyWithStaticWsdl() throws Exception {
+		final ApplicationContext context = new ClassPathXmlApplicationContext(
+				"jaxwsproxy-beans.xml");
+		final Hello h = (Hello) context.getBean("serviceStaticWsdl");
 		final BaseType parameters = new BaseType();
 		parameters.setMessage("abc");
 		final DerivedType sayHello = h.sayHello(parameters);
