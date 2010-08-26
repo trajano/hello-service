@@ -3,8 +3,8 @@ package net.trajano.ws.helloservice.test;
 import junit.framework.Assert;
 import net.trajano.ws.helloservice.Hello;
 import net.trajano.ws.helloservice.HelloService;
-import net.trajano.ws.helloservice.SayHello;
-import net.trajano.ws.helloservice.SayHelloResponse;
+import net.trajano.ws.schema.business.BaseType;
+import net.trajano.ws.schema.business.DerivedType;
 
 import org.apache.cxf.test.AbstractCXFSpringTest;
 import org.junit.Test;
@@ -31,10 +31,10 @@ public class ConnectionTest extends AbstractCXFSpringTest {
 	public void getFromSpring() throws Exception {
 		final HelloService helloService = new HelloService();
 		final Hello h = helloService.getDevPort();
-		final SayHello req = new SayHello();
-		req.setIn("abc");
-		final SayHelloResponse sayHello = h.sayHello(req);
-		Assert.assertEquals("{{CxfTestabc", sayHello.getOut());
+		final BaseType req = new BaseType();
+		req.setMessage("abc");
+		final DerivedType sayHello = h.sayHello(req);
+		Assert.assertEquals("{{CxfTestabc", sayHello.getSomeOther());
 	}
 
 }

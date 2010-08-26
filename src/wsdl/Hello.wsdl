@@ -2,65 +2,41 @@
 <wsdl:definitions name="HelloService"
 	targetNamespace="http://ws.trajano.net/HelloService/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
 	xmlns:tns="http://ws.trajano.net/HelloService/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:app="http://ws.trajano.net/schema/business">
 	<wsdl:documentation>Web service container</wsdl:documentation>
+	<wsdl:import namespace="http://ws.trajano.net/schema/business"
+		location="business.xsd" />
 	<wsdl:types>
-		<xsd:schema targetNamespace="http://ws.trajano.net/HelloService/"
-			xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ws.trajano.net/HelloService/">
-			<xsd:element name="SayHello">
-				<xsd:complexType>
-					<xsd:all>
-						<xsd:element name="in" type="xsd:string">                            <xsd:annotation>
-                            	<xsd:documentation>First string parameter</xsd:documentation>
-                            </xsd:annotation></xsd:element>
-						<xsd:element name="in2"
-							type="xsd:string">
-                            <xsd:annotation>
-                            	<xsd:documentation>Second string parameter</xsd:documentation>
-                            </xsd:annotation>
-						</xsd:element>
-					</xsd:all>
-				</xsd:complexType>
-			</xsd:element>
-			<xsd:element name="SayHelloResponse">
-				<xsd:complexType>
-					<xsd:all>
-						<xsd:element name="out" type="xsd:string"></xsd:element>
-					</xsd:all>
-				</xsd:complexType>
-			</xsd:element>
-			<xsd:element name="SayHelloFault">
-				<xsd:complexType>
-					<xsd:sequence>
-						<xsd:element name="SayHelloFault"
-							type="xsd:string">
-						</xsd:element>
-					</xsd:sequence>
-				</xsd:complexType>
-			</xsd:element>
+		<xsd:schema>
+			<xsd:import namespace="http://ws.trajano.net/schema/business"
+				schemaLocation="business.xsd" />
 		</xsd:schema>
 	</wsdl:types>
 	<wsdl:message name="SayHelloRequest">
 		<wsdl:documentation>Say hello request</wsdl:documentation>
-		<wsdl:part name="parameters" element="tns:SayHello">
-			<wsdl:documentation>say hello parameters</wsdl:documentation></wsdl:part>
+		<wsdl:part name="parameters" element="app:HelloRequest">
+			<wsdl:documentation>say hello parameters</wsdl:documentation>
+		</wsdl:part>
 	</wsdl:message>
 	<wsdl:message name="SayHelloResponse">
-		<wsdl:documentation>resposnse parameters for the response</wsdl:documentation>
-		<wsdl:part name="parameters" element="tns:SayHelloResponse"></wsdl:part>
+		<wsdl:documentation>resposnse parameters for the response
+		</wsdl:documentation>
+		<wsdl:part name="parameters" element="app:HelloResponse"></wsdl:part>
 	</wsdl:message>
 	<wsdl:message name="SayHelloFault">
-		<wsdl:part name="parameters" element="tns:SayHelloFault"></wsdl:part>
+		<wsdl:part name="parameters" element="app:ApplicationFault"></wsdl:part>
 	</wsdl:message>
 	<wsdl:portType name="Hello">
 		<wsdl:documentation>Hello world sample</wsdl:documentation>
 		<wsdl:operation name="SayHello">
-			<wsdl:documentation>Say Hello Operation.  Throws a fault if the input message is &quot;fault&quot;</wsdl:documentation>
+			<wsdl:documentation>Say Hello Operation. Throws a fault if the input
+				message is &quot;fault&quot;</wsdl:documentation>
 			<wsdl:input message="tns:SayHelloRequest"></wsdl:input>
 			<wsdl:output message="tns:SayHelloResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SayHelloFault">
-            	<wsdl:documentation>Fault type</wsdl:documentation></wsdl:fault>
-        </wsdl:operation>
+			<wsdl:fault name="fault" message="tns:SayHelloFault">
+				<wsdl:documentation>Fault type</wsdl:documentation>
+			</wsdl:fault>
+		</wsdl:operation>
 	</wsdl:portType>
 	<wsdl:binding name="HelloBinding" type="tns:Hello">
 		<soap:binding style="document"
@@ -81,7 +57,8 @@
 	</wsdl:binding>
 	<wsdl:service name="HelloService">
 		<wsdl:port name="DevPort" binding="tns:HelloBinding">
-			<wsdl:documentation>This port is used for local testing on Jetty.</wsdl:documentation>
+			<wsdl:documentation>This port is used for local testing on Jetty.
+			</wsdl:documentation>
 			<soap:address location="http://localhost:8080/hello" />
 		</wsdl:port>
 	</wsdl:service>

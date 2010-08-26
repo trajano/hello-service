@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://ws.trajano.net/schema/common"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://ws.trajano.net/schema/common">
+	<annotation>
+		<documentation>Common schema. In theory stuff in here will be derived
+			and further restricted by clients.
+			http://ws.trajano.net/schema/
+			contains all the schema.
+			http://ws.trajano.net/fault contains fault
+			messages. One off types even if their restrictions are repeated are
+			going to be made anonymous types to keep them localized. However,
+			real types (those that would be used explicity rather than as part of
+			a complex type are made non-anonymous).</documentation>
+	</annotation>
+
+
+	<complexType name="ApplicationFaultType">
+		<annotation>
+			<documentation>
+				Fault type for SOAP applications that provides
+				application context. This is what is normally thrown. It
+				should
+				contain a map of stuff. The objective is
+				simplicity rather than best
+				practice; which is to use a
+				separate schema rather than name value
+				pairs although
+				there is no reason why we cannot have it.
+
+				An
+				ApplicationFaultType also contains itself in order to do chained or
+				for multiple validation messages.
+			</documentation>
+		</annotation>
+		<all>
+			<element name="ErrorCode" type="string" minOccurs="1"
+				maxOccurs="1">
+				<annotation>
+					<documentation>
+						This is the error code that represents the
+						message.
+						This is meant to be used by clients for
+						looking up localized
+						versions of fault messages
+						if any. This is made mandatory as this
+						fault
+						should provide proper application messages.
+					</documentation>
+				</annotation>
+			</element>
+			<element name="Message" type="string" maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>
+						This is a non-localized message representing the
+						fault. It is meant for debugging problems and
+						not meant to be seen
+						by the client. This is
+						mandatory.
+					</documentation>
+				</annotation>
+			</element>
+			<element name="StackTrace" maxOccurs="1" minOccurs="0">
+				<annotation>
+					<documentation>
+						This contains the stack trace represented as a
+						string. This is populated using
+						Exception.printStackTrace(PrintStream). This
+						value is optional
+						because the stack trace is
+						more for troubleshooting, but may
+						contain
+						information that the service provider may not
+						want to show.
+					</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<whiteSpace value="preserve"></whiteSpace>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="ExtraInformation" type="tns:StringMapType"
+				maxOccurs="1" minOccurs="0">
+				<annotation>
+					<documentation>
+						Extra information that may be client specific.
+						The
+						data can be used to populate message
+						formats.
+					</documentation>
+				</annotation>
+			</element>
+			<element name="Level" minOccurs="1">
+				<annotation>
+					<documentation>
+						This is the error level. Generally it would be
+						ERRROR for the most part. WARN may be used for
+						validation warnings
+						and INFO may just be
+						information messages thrown via a fault. The
+						purpose of this is to show something on the
+						client end as to the
+						severity of the error as
+						understood by the application and not
+						necessarily an actual representation of the
+						severity of the error
+						itself.
+					</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="ERROR"></enumeration>
+						<enumeration value="WARNING"></enumeration>
+						<enumeration value="INFO"></enumeration>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="ChainedFaults" minOccurs="0" maxOccurs="1">
+				<complexType>
+					<sequence>
+						<element name="Fault" type="tns:ApplicationFaultType"
+							minOccurs="0" maxOccurs="unbounded"></element>
+					</sequence>
+				</complexType>
+			</element>
+		</all>
+	</complexType>
+
+	<complexType name="StringMapType">
+		<annotation>
+			<documentation>
+				This is map data where you can provide a string key
+				and
+				string value pair. The objective is to keep things simple so it
+				was not made to use "any" type. However, there is no restriction to
+				prevent adding another element to derived classes.
+			</documentation>
+		</annotation>
+		<sequence>
+			<element name="Entry" minOccurs="0">
+				<complexType>
+					<all>
+						<element name="Name" minOccurs="1" maxOccurs="1">
+							<simpleType>
+								<restriction base="string">
+									<minLength value="1"></minLength>
+								</restriction>
+							</simpleType>
+						</element>
+						<element name="Value" minOccurs="1" maxOccurs="1">
+							<simpleType>
+								<restriction base="string">
+									<whiteSpace value="preserve"></whiteSpace>
+								</restriction>
+							</simpleType>
+						</element>
+					</all>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+
+	<simpleType name="UUIDType">
+		<annotation>
+			<documentation>This is a Universally Unique ID number. This is
+				generated by the UUID function in Java.</documentation>
+		</annotation>
+		<restriction base="string">
+			<pattern
+				value="^[0-9a-f]{8}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{12}$">
+			</pattern>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="Amount">
+		<restriction base="decimal">
+			<totalDigits value="20"></totalDigits>
+			<fractionDigits value="2"></fractionDigits>
+			<minInclusive value="0"></minInclusive>
+		</restriction>
+	</simpleType>
+	<simpleType name="ExchangeRate">
+		<restriction base="decimal">
+			<totalDigits value="10"></totalDigits>
+			<fractionDigits value="4"></fractionDigits>
+			<minInclusive value="0"></minInclusive>
+		</restriction>
+	</simpleType>
+
+	<element name="ApplicationFault" type="tns:ApplicationFaultType"></element>
+</schema>

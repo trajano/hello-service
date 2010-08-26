@@ -1,9 +1,18 @@
 package net.trajano.ws.helloservice.test;
 
+import java.util.UUID;
+import java.util.regex.Pattern;
+
 import org.junit.Assert;
 import org.junit.Test;
 
-public class InheritanceTest {
+/**
+ * These are tests on how the Java language and their APIs work.
+ * 
+ * @author Archimedes Trajano <arch@trajano.net>
+ * 
+ */
+public class JavaLanguageTest {
 
 	static class A {
 		private final String a = this.getClass().getName();
@@ -55,5 +64,19 @@ public class InheritanceTest {
 	public void thisGetGlassDynamic() {
 		Assert.assertFalse(new A().getClassNameDynamic().equals(
 				new B().getClassNameDynamic()));
+	}
+
+	/**
+	 * Checks if the UUID pattern matches.
+	 */
+	@Test
+	public void uuidTest() {
+		System.out.println(UUID.randomUUID().toString());
+		System.out.println("12345678-1234-1234-1234-123456789012");
+		Assert.assertTrue(Pattern
+				.matches(
+						"^[0-9a-f]{8}\\-[0-9a-f]{4}\\-[0-9a-f]{4}\\-[0-9a-f]{4}\\-[0-9a-f]{12}$",
+						UUID.randomUUID().toString()));
+
 	}
 }
