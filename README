@@ -28,9 +28,8 @@ of a service class.  Ideally one WSDL implementation per Service
 Implementation project.  It uses wsimport to generate the interface code
 from a request to a deployed web service container project.
 
-The WSDL should be stored as part of the classpath, that way 
-the maven-dependency-plugin can pull the data.  Or... we can use the
-maven-source-plugin to genereate the source code and pull from there.
+The WSDL should be stored in META-INF/wsdl so we can extract the data using
+the maven-dependency-plugin.
 
 * Service Implementation Integration Test.  This is a support project for
 those than need to test integration for a deployed project.
