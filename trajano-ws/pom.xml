@@ -2,11 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.trajano.webservice</groupId>
-	<artifactId>hello-service</artifactId>
+	<artifactId>trajano-ws</artifactId>
 	<packaging>war</packaging>
-	<name>Web Service</name>
+	<name>Web Service Container</name>
 	<version>1.0.0-SNAPSHOT</version>
-	<description>This archetype is for contract first web services that are using Spring to inject data.</description>
+	<description>This is a container for various web services.</description>
 	<inceptionYear>2010</inceptionYear>
 	<scm>
 		<connection>scm:git:git://github.com/trajano/hello-service.git</connection>
@@ -18,8 +18,7 @@
 		<url>http://www.trajano.net/</url>
 	</organization>
 	<build>
-		<testResources></testResources>
-		<finalName>hello-service</finalName>
+		<finalName>trajano-ws</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -28,29 +27,6 @@
 					<source>1.6</source>
 					<target>1.6</target>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-<executions>
-          <execution>
-            <id>copy</id>
-            <phase>package</phase>
-            <goals>
-              <goal>copy</goal>
-            </goals>
-
-				<configuration>
-	<artifactItems>
-                <artifactItem><groupId>net.trajano.webservice</groupId>
-<artifactId>trajano-ws</artifactId>
-<version>1.0-SNAPSHOT</version>
-<type>war</type>
-</artifactItem>
-</artifactItems>				
-				</configuration>
-</execution>
-</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -70,22 +46,6 @@
 				<extensions>false</extensions>
 				<inherited>false</inherited>
 			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jaxws-maven-plugin</artifactId>
-				<version>1.10</version>
-				<executions>
-					<execution>
-						<id>wsimport</id>
-						<goals>
-							<goal>wsimport</goal>
-						</goals>
-						<configuration>
-							<wsdlDirectory>${basedir}/src/main/webapp/wsdl</wsdlDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
@@ -104,14 +64,6 @@
 			<version>2.2.9</version>
 			<type>jar</type>
 			<scope>runtime</scope>
-			<optional>false</optional>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.8.1</version>
-			<type>jar</type>
-			<scope>test</scope>
 			<optional>false</optional>
 		</dependency>
 		<dependency>
@@ -138,40 +90,5 @@
 			<scope>compile</scope>
 			<optional>false</optional>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-			<version>2.5.6</version>
-			<type>jar</type>
-			<scope>compile</scope>
-			<optional>false</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-transports-http-jetty</artifactId>
-			<version>2.2.9</version>
-			<type>jar</type>
-			<scope>test</scope>
-			<optional>false</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>1.6.9</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
 	</dependencies>
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-report-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</reporting>
 </project>
