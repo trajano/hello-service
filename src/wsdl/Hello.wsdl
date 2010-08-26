@@ -4,8 +4,6 @@
 	xmlns:tns="http://ws.trajano.net/HelloService/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:app="http://ws.trajano.net/schema/business">
 	<wsdl:documentation>Web service container</wsdl:documentation>
-	<wsdl:import namespace="http://ws.trajano.net/schema/business"
-		location="business.xsd" />
 	<wsdl:types>
 		<xsd:schema>
 			<xsd:import namespace="http://ws.trajano.net/schema/business"
