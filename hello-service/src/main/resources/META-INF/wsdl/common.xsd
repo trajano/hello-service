@@ -10,7 +10,11 @@
 			messages. One off types even if their restrictions are repeated are
 			going to be made anonymous types to keep them localized. However,
 			real types (those that would be used explicity rather than as part of
-			a complex type are made non-anonymous).</documentation>
+			a complex type are made non-anonymous). However, if a type is going
+			to be extended or restricted, then all its complex child types must
+			not be
+			anonymous, otherwise it will prevent extension of sub-children.
+		</documentation>
 	</annotation>
 
 
@@ -198,10 +202,20 @@
 			<element name="GenericString" type="string" maxOccurs="1"
 				minOccurs="0">
 			</element>
-			<!-- <element name="SomeDecimal" type="decimal" maxOccurs="1" minOccurs="0"> 
-				</element> <element name="AdditionalObjects" maxOccurs="1" minOccurs="0"> 
-				<complexType> <sequence> <element name="Object" type="tns:NestedType" maxOccurs="unbounded" 
-				minOccurs="0"></element> </sequence> </complexType> </element> -->
+			<element name="SomeDecimal" type="decimal" maxOccurs="1"
+				minOccurs="0">
+			</element>
+			<element name="AdditionalObjects" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<sequence>
+						<element name="Object" type="tns:NestedType" maxOccurs="unbounded"
+							minOccurs="0">
+						</element>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="Nested" type="tns:NestedType" maxOccurs="1"
+				minOccurs="0"></element>
 		</all>
 	</complexType>
 

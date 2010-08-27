@@ -52,12 +52,16 @@
 		<complexContent>
 			<restriction base="pref:CommonBaseType">
 				<all>
-					<element name="GenericString" type="string" minOccurs="0"
+					<element name="GenericString" type="string" minOccurs="1"
 						maxOccurs="1"></element>
 
-					<!-- <element name="GenericString" type="string" minOccurs="0" maxOccurs="1"></element> 
-						<element name="AdditionalObjects" type="pref:NestedType" maxOccurs="unbounded" 
-						minOccurs="0"></element> -->
+					<!-- <element name="AdditionalObjects" maxOccurs="1" minOccurs="0"> 
+						<complexType> <sequence> <element name="Object" type="pref:NestedType" maxOccurs="unbounded" 
+						minOccurs="0"> </element> </sequence> </complexType> </element> -->
+
+
+					<element name="Nested" type="tns:NestedType" maxOccurs="1"
+						minOccurs="1"></element>
 				</all>
 			</restriction>
 		</complexContent>
@@ -65,10 +69,46 @@
 
 	<complexType name="NestedType">
 		<complexContent>
-			<extension base="pref:NestedType"></extension>
+			<restriction base="pref:NestedType">
+				<sequence>
+					<element name="nestedString" type="language" maxOccurs="1"
+						minOccurs="1">
+					</element>
+					<element name="chained" type="pref:NestedType" maxOccurs="unbounded"
+						minOccurs="1"></element>
+				</sequence>
+			</restriction>
 		</complexContent>
 	</complexType>
 
+	<complexType name="ManyChoicesType">
+		<choice>
+			<element name="a" type="string"></element>
+			<element name="b" type="string"></element>
+			<element name="c" type="string"></element>
+			<element name="d" type="string"></element>
+			<element name="e" type="string"></element>
+			<element name="f" type="string"></element>
+			<element name="g" type="string"></element>
+		</choice>
+	</complexType>
 
+	<complexType name="LessChoicesType">
+		<complexContent>
+			<restriction base="tns:ManyChoicesType">
+				<choice>
+					<element name="d" type="string"></element>
+					<element name="e" type="string"></element>
+					<element name="f" type="string"></element>
+				</choice>
+			</restriction>
+		</complexContent>
+	</complexType>
 	<element name="Derivation" type="tns:DerivedCommonType"></element>
+
+    <element name="TryOut"><complexType>
+	<all>
+		<element name="ManyChoices" type="tns:ManyChoicesType" minOccurs="0"></element>
+		<element name="LessChoices" type="tns:LessChoicesType" minOccurs="0"></element>
+	</all></complexType></element>
 </schema>
