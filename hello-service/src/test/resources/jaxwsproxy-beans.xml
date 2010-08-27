@@ -10,8 +10,8 @@
 		class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
 		<property name="serviceInterface" value="net.trajano.ws.helloservice.Hello" />
 		<property name="wsdlDocumentUrl" value="http://localhost:8080/trajano-ws/services/hello?wsdl" />
-		<property name="namespaceUri" value="http://impl.helloservice.ws.trajano.net/" />
-		<property name="serviceName" value="HelloImplService" />
+		<property name="namespaceUri" value="http://ws.trajano.net/HelloService/" />
+		<property name="serviceName" value="HelloService" />
         <property name="endpointAddress" value="http://localhost:8080/trajano-ws/services/hello" />
 	</bean>
 	<bean name="serviceStaticWsdl"

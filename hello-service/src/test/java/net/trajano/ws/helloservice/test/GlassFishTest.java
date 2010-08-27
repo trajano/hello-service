@@ -8,7 +8,6 @@ import net.trajano.ws.helloservice.HelloService;
 import net.trajano.ws.schema.business.BaseType;
 import net.trajano.ws.schema.business.DerivedType;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -20,7 +19,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author Archimedes Trajano <arch@trajano.net>
  * 
  */
-@Ignore
+// @Ignore
 public class GlassFishTest {
 
 	/**

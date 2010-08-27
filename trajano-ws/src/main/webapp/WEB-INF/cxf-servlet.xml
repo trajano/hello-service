@@ -12,7 +12,8 @@
 	<!-- End points -->
 	<!-- I want to move the address and remove the jaxws tags as annotations, 
 		but keep the bean configuration itself in the applicationContext.xml -->
-	<jaxws:endpoint address="/hello">
+	<jaxws:endpoint address="/hello" serviceName="t:HelloService"
+		xmlns:t="http://ws.trajano.net/HelloService/">
 		<jaxws:implementor>
 			<bean class="net.trajano.ws.helloservice.impl.HelloImpl">
 				<property name="helloString" value="HelloStrinCXF" />
