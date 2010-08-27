@@ -1,0 +1,67 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.trajano.webservice</groupId>
+	<artifactId>trajano-enterprise</artifactId>
+	<packaging>ear</packaging>
+	<name>Enterprise Archive</name>
+	<version>1.0.0-SNAPSHOT</version>
+	<description>This is the enterprise archive.</description>
+	<inceptionYear>2010</inceptionYear>
+	<scm>
+		<connection>scm:git:git://github.com/trajano/hello-service.git</connection>
+		<developerConnection>scm:git:git@github.com:trajano/hello-service.git</developerConnection>
+		<url>http://github.com/trajano/hello-service</url>
+	</scm>
+	<organization>
+		<name>trajano.net</name>
+		<url>http://www.trajano.net/</url>
+	</organization>
+	<build>
+		<finalName>trajano-ws</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<additionalProjectFacets>
+						<java>1.6</java>
+						<jst.web>2.5</jst.web>
+						<wst.jsdt.web>1.0</wst.jsdt.web>
+					</additionalProjectFacets>
+					<additionalProjectnatures>
+						<projectnature>
+							org.eclipse.wst.common.project.facet.core.nature
+                        </projectnature>
+					</additionalProjectnatures>
+				</configuration>
+				<extensions>false</extensions>
+				<inherited>false</inherited>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>net.trajano.webservice</groupId>
+			<artifactId>trajano-ws</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+			<type>jar</type>
+			<scope>test</scope>
+			<optional>false</optional>
+		</dependency>
+	</dependencies>
+</project>
