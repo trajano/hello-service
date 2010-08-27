@@ -87,8 +87,8 @@
 			<element name="b" type="string"></element>
 			<element name="c" type="string"></element>
 			<element name="d" type="string"></element>
-			<element name="e" type="string"></element>
-			<element name="f" type="string"></element>
+			<element name="e" type="pref:NestedType"></element>
+			<element name="f" type="tns:NestedType"></element>
 			<element name="g" type="string"></element>
 		</choice>
 	</complexType>
@@ -98,17 +98,33 @@
 			<restriction base="tns:ManyChoicesType">
 				<choice>
 					<element name="d" type="string"></element>
-					<element name="e" type="string"></element>
-					<element name="f" type="string"></element>
+					<element name="e" type="tns:NestedType"></element>
+					<element name="f" type="tns:NestedType"></element>
 				</choice>
 			</restriction>
 		</complexContent>
 	</complexType>
+
+	<complexType name="DerivedChoicesType">
+		<complexContent>
+			<restriction base="pref:CommonChoicesType">
+				<choice>
+					<element name="d" type="string"></element>
+					<element name="e" type="tns:NestedType"></element>
+					<element name="f" type="tns:NestedType"></element>
+				</choice>
+			</restriction>
+		</complexContent>
+	</complexType>
+
+
 	<element name="Derivation" type="tns:DerivedCommonType"></element>
 
     <element name="TryOut"><complexType>
 	<all>
 		<element name="ManyChoices" type="tns:ManyChoicesType" minOccurs="0"></element>
 		<element name="LessChoices" type="tns:LessChoicesType" minOccurs="0"></element>
+		<element name="CommonChoices" type="pref:CommonChoicesType" minOccurs="0"></element>
+		<element name="DerivedChoices" type="tns:DerivedChoicesType" minOccurs="0"></element>
 	</all></complexType></element>
 </schema>
