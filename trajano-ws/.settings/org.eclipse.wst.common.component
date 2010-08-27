@@ -3,6 +3,7 @@
     <wb-module deploy-name="trajano-ws">
         <wb-resource deploy-path="/" source-path="/target/trajano-ws"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <property name="context-root" value="trajano-ws"/>
         <property name="java-output-path" value="/trajano-ws/target/classes"/>
     </wb-module>
