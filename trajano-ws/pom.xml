@@ -28,6 +28,40 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+<artifactItems>
+<artifactItem>
+<groupId>net.trajano.webservice</groupId>
+<artifactId>hello-service</artifactId>
+</artifactItem>
+</artifactItems>
+ <includes>**/*.xsd,**/*.wsdl</includes>
+               
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <webResources>
+            <resource>
+              <directory>target/dependency/META-INF</directory>
+            </resource>
+          </webResources>
+        </configuration>
+      </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>

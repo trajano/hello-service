@@ -37,7 +37,7 @@
 				<artifactId>jaxws-maven-plugin</artifactId>
 				<version>1.10</version>
 				<configuration>
-					<wsdlDirectory>${basedir}/src/main/resources/META-INF//wsdl</wsdlDirectory>
+					<wsdlDirectory>${basedir}/src/main/resources/META-INF/wsdl</wsdlDirectory>
 				</configuration>
 				<executions>
 					<execution>
