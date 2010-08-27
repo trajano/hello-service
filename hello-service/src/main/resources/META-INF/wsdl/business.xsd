@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema targetNamespace="http://ws.trajano.net/schema/business"
-	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ws.trajano.net/schema/business" xmlns:pref="http://ws.trajano.net/schema/common">
-	<import schemaLocation="common.xsd"
-		namespace="http://ws.trajano.net/schema/common">
+	xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ws.trajano.net/schema/business"
+	xmlns:pref="http://ws.trajano.net/schema/common">
+	<import schemaLocation="common.xsd" namespace="http://ws.trajano.net/schema/common">
 	</import>
 
 	<complexType name="BaseType">
-		<sequence>
+		<all>
 			<element name="Message" type="string" maxOccurs="1"
 				minOccurs="0">
 			</element>
 			<element name="OtherElement" type="string"></element>
-			<element name="SomeOther" type="string" maxOccurs="1" minOccurs="0"></element>
-		</sequence>
+			<element name="Aggregate" type="tns:AggregatedType"></element>
+			<element name="SomeOther" type="string" maxOccurs="1"
+				minOccurs="0">
+			</element>
+		</all>
 	</complexType>
 
 	<complexType name="DerivedType">
 		<complexContent>
-            <restriction base="tns:BaseType">
-				<sequence>
-					<element name="Message" maxOccurs="1"
-						minOccurs="1">
+			<restriction base="tns:BaseType">
+				<all>
+					<element name="Message" maxOccurs="1" minOccurs="1">
 						<simpleType>
 							<restriction base="string">
 								<minLength value="2"></minLength>
@@ -29,14 +31,44 @@
 						</simpleType>
 					</element>
 					<element name="OtherElement" type="string"></element>
-				</sequence>
-            </restriction>
+					<element name="Aggregate" type="tns:AggregatedType"></element>
+				</all>
+			</restriction>
 		</complexContent>
 	</complexType>
 
 	<element name="HelloRequest" type="tns:BaseType"></element>
-
 	<element name="HelloResponse" type="tns:DerivedType"></element>
-
 	<element name="ApplicationFault" type="pref:ApplicationFaultType"></element>
+
+	<complexType name="AggregatedType">
+		<sequence>
+			<element name="uuid" type="pref:UUIDType"></element>
+			<element name="anyString" type="string"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="DerivedCommonType">
+		<complexContent>
+			<restriction base="pref:CommonBaseType">
+				<all>
+					<element name="GenericString" type="string" minOccurs="0"
+						maxOccurs="1"></element>
+
+					<!-- <element name="GenericString" type="string" minOccurs="0" maxOccurs="1"></element> 
+						<element name="AdditionalObjects" type="pref:NestedType" maxOccurs="unbounded" 
+						minOccurs="0"></element> -->
+				</all>
+			</restriction>
+		</complexContent>
+	</complexType>
+
+	<complexType name="NestedType">
+		<complexContent>
+			<extension base="pref:NestedType"></extension>
+		</complexContent>
+	</complexType>
+
+
+	<element name="Derivation" type="tns:DerivedCommonType"></element>
 </schema>

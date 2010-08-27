@@ -71,8 +71,6 @@ public class JavaLanguageTest {
 	 */
 	@Test
 	public void uuidTest() {
-		System.out.println(UUID.randomUUID().toString());
-		System.out.println("12345678-1234-1234-1234-123456789012");
 		Assert.assertTrue(Pattern
 				.matches(
 						"^[0-9a-f]{8}\\-[0-9a-f]{4}\\-[0-9a-f]{4}\\-[0-9a-f]{4}\\-[0-9a-f]{12}$",
