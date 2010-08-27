@@ -1,4 +1,4 @@
-package net.trajano.ws.helloservice.test;
+package net.trajano.ws.test;
 
 import net.trajano.ws.helloservice.Hello;
 import net.trajano.ws.helloservice.impl.HelloImpl;
