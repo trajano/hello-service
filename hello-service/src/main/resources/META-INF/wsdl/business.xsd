@@ -111,12 +111,25 @@
 				<choice>
 					<element name="d" type="string"></element>
 					<element name="e" type="tns:NestedType"></element>
-					<element name="f" type="tns:NestedType"></element>
 				</choice>
 			</restriction>
 		</complexContent>
 	</complexType>
 
+	<simpleType name="LimitString">
+		<restriction base="string">
+			<minLength value="1"></minLength>
+			<maxLength value="30"></maxLength>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="EnumString">
+		<restriction base="tns:LimitString">
+			<enumeration value="D"></enumeration>
+			<enumeration value="E"></enumeration>
+			<enumeration value="FF"></enumeration>
+		</restriction>
+	</simpleType>
 
 	<element name="Derivation" type="tns:DerivedCommonType"></element>
 
