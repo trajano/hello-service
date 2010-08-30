@@ -18,7 +18,7 @@
 		<url>http://www.trajano.net/</url>
 	</organization>
 	<build>
-		<finalName>trajano-ws</finalName>
+		<finalName>trajano-enterprise</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

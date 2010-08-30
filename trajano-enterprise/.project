@@ -1,0 +1,16 @@
+<projectDescription>
+  <name>trajano-enterprise</name>
+  <comment>This is the enterprise archive. NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
+  <projects>
+    <project>trajano-ws</project>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.wst.validation.validationbuilder</name>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.wst.common.project.facet.core.nature</nature>
+    <nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
+  </natures>
+</projectDescription>
