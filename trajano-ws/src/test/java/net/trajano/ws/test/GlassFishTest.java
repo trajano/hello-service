@@ -20,7 +20,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author Archimedes Trajano <arch@trajano.net>
  * 
  */
-//@Ignore
+@Ignore
 public class GlassFishTest {
 
 	/**
