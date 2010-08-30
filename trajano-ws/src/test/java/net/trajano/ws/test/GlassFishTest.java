@@ -1,4 +1,4 @@
-package net.trajano.ws.helloservice.test;
+package net.trajano.ws.test;
 
 import javax.xml.ws.BindingProvider;
 
@@ -20,7 +20,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author Archimedes Trajano <arch@trajano.net>
  * 
  */
-@Ignore
+//@Ignore
 public class GlassFishTest {
 
 	/**
