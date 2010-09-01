@@ -1,6 +1,7 @@
 package net.trajano.ws.helloservice.test;
 
 import java.io.IOException;
+import java.io.StringWriter;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -12,7 +13,6 @@ import net.trajano.ws.schema.business.LessChoicesType;
 import net.trajano.ws.schema.business.ObjectFactory;
 import net.trajano.ws.schema.business.TryOut;
 
-import org.apache.geronimo.mail.util.StringBufferOutputStream;
 import org.junit.Assert;
 import org.junit.Test;
 import org.xml.sax.SAXException;
@@ -57,11 +57,10 @@ public class TryOutSchemaTest {
 				"http://www.w3.org/2001/XMLSchema").newSchema(
 				getClass().getResource("/META-INF/wsdl/business.xsd"));
 		m.setSchema(schema);
-		final StringBuffer buf = new StringBuffer();
-		final StringBufferOutputStream os = new StringBufferOutputStream(buf);
-		m.marshal(o, os);
-		os.close();
-		return buf.toString();
+		final StringWriter writer = new StringWriter();
+		m.marshal(o, writer);
+		writer.close();
+		return writer.toString();
 	}
 
 	@Test
