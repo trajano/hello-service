@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/qualifiedbase"
+	xmlns:tns="http://www.example.org/qualifiedbase" elementFormDefault="qualified">
+	<element name="Foo">
+		<simpleType>
+			<restriction base="string"></restriction>
+		</simpleType>
+	</element>
+	<element name="Bar" type="anyURI" />
+	<complexType name="Base">
+		<all>
+			<element ref="tns:Foo" minOccurs="0"></element>
+			<element ref="tns:Bar" minOccurs="0"></element>
+		</all>
+	</complexType>
+</schema>

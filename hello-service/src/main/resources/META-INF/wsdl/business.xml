@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tns:HelloResponse xmlns:tns="http://ws.trajano.net/schema/business" xmlns:tns1="http://ws.trajano.net/schema/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ws.trajano.net/schema/business business.xsd ">
-  <tns:Message>tne</tns:Message>
-  <tns:OtherElement>tns:OtherElement</tns:OtherElement>
+<tns:HelloResponse xmlns="http://ws.trajano.net/schema/business"
+	xmlns:tns1="http://ws.trajano.net/schema/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://ws.trajano.net/schema/business business.xsd ">
+	<Message>tne</Message>
+	<OtherElement>tns:OtherElement</OtherElement>
+	<Aggregate>
+		<uuid>12345678-1234-1234-1234-123456789012</uuid>
+		<anyString>abc</anyString>
+	</Aggregate>
 </tns:HelloResponse>

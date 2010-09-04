@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/qualifiedderived"
+	xmlns:base="http://www.example.org/qualifiedbase" xmlns:tns="http://www.example.org/qualifiedderived"
+	elementFormDefault="qualified">
+	<import namespace="http://www.example.org/qualifiedbase"
+		schemaLocation="qualifiedbase.xsd"></import>
+	<element name="Base" type="tns:Base" />
+
+	<complexType name="Base">
+		<all>
+			<element ref="base:Foo" minOccurs="1"></element>
+		</all>
+	</complexType>
+</schema>
