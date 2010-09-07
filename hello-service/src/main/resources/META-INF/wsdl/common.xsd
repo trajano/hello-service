@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema targetNamespace="http://ws.trajano.net/schema/common"
-	xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ws.trajano.net/schema/common">
+	xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ws.trajano.net/schema/common"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0">
 	<annotation>
+		<appinfo>
+			<jaxb:globalBindings>
+				<jaxb:serializable uid="42" />
+			</jaxb:globalBindings>
+		</appinfo>
 		<documentation>Common schema. In theory stuff in here will be derived
 			and further restricted by clients.
 			http://ws.trajano.net/schema/
@@ -227,8 +233,8 @@
 				minOccurs="0"></element>
 		</sequence>
 	</complexType>
-	
-		<complexType name="CommonChoicesType">
+
+	<complexType name="CommonChoicesType">
 		<choice>
 			<element name="a" type="string"></element>
 			<element name="b" type="string"></element>

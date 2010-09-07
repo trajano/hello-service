@@ -40,8 +40,7 @@
 		<soap:binding style="document"
 			transport="http://schemas.xmlsoap.org/soap/http" />
 		<wsdl:operation name="SayHello">
-			<soap:operation
-				soapAction="http://ws.trajano.net/HelloService/SayHello" />
+			<soap:operation soapAction="http://ws.trajano.net/HelloService/SayHello" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
