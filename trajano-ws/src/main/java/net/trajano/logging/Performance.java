@@ -2,9 +2,12 @@ package net.trajano.logging;
 
 import java.text.MessageFormat;
 
+import javax.xml.ws.handler.LogicalHandler;
+import javax.xml.ws.handler.LogicalMessageContext;
+import javax.xml.ws.handler.MessageContext;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.aspectj.lang.ProceedingJoinPoint;
 
 /**
  * <p>
@@ -16,25 +19,40 @@ import org.aspectj.lang.ProceedingJoinPoint;
  * @author Archimedes Trajano <arch@trajano.net>
  * 
  */
-public class Performance {
+public class Performance implements LogicalHandler<LogicalMessageContext> {
 	/**
 	 * Logger.
 	 */
 	private final Log logger = LogFactory.getLog(this.getClass());
 
 	/**
-	 * Takes the start and end time and logs it.
+	 * Start time.
 	 */
-	public Object log(final ProceedingJoinPoint joinPoint) throws Throwable {
-		final long t0 = System.currentTimeMillis();
-		try {
-			return joinPoint.proceed();
-		} finally {
+	private ThreadLocal<Long> startTime;
+
+
+	@Override
+	public boolean handleMessage(LogicalMessageContext messagecontext) {
+		if ((Boolean) messagecontext
+				.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY)) {
+			final long t0 = startTime.get();
 			final long t1 = System.currentTimeMillis();
-			logger.info(MessageFormat.format("{0}.{1} {2}ms", joinPoint
-					.getSignature().getDeclaringTypeName(), joinPoint
-					.getSignature().getName(), t1 - t0));
+			logger.info(MessageFormat.format("{0} {1}ms",
+					messagecontext.get(MessageContext.WSDL_OPERATION), t1 - t0));
+		} else {
+			startTime.set(System.currentTimeMillis());
 		}
+		return true;
+	}
+
+	@Override
+	public boolean handleFault(LogicalMessageContext messagecontext) {
+		return handleMessage(messagecontext);
+	}
+
+	@Override
+	public void close(MessageContext messagecontext) {
+
 	}
 
 }

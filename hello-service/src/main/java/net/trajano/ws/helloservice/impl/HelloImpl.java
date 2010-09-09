@@ -1,5 +1,7 @@
 package net.trajano.ws.helloservice.impl;
 
+import javax.jws.WebService;
+
 import net.trajano.ws.helloservice.Hello;
 import net.trajano.ws.helloservice.SayHelloFault;
 import net.trajano.ws.schema.business.BaseType;
@@ -10,9 +12,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
+@WebService(endpointInterface = "net.trajano.ws.helloservice.Hello")
 public class HelloImpl implements Hello {
 
+	/**
+	 * Injected value.
+	 */
 	private String helloString;
+
 	/**
 	 * <p>
 	 * Logger. Personal preference is to use private final non-static loggers.

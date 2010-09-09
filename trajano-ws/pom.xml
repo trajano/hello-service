@@ -6,7 +6,7 @@
 	<packaging>war</packaging>
 	<name>Web Service Container</name>
 	<version>1.0.0-SNAPSHOT</version>
-	<description>This is a container for various web services.</description>
+	<description>This is a container for various web services and provides handlers to do performance and audit logging.</description>
 	<inceptionYear>2010</inceptionYear>
 	<scm>
 		<connection>scm:git:git://github.com/trajano/hello-service.git</connection>
@@ -28,58 +28,6 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>unpack</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>net.trajano.webservice</groupId>
-									<artifactId>hello-service</artifactId>
-								</artifactItem>
-							</artifactItems>
-							<includes>**/*.xsd,**/*.wsdl</includes>
-
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<webResources>
-						<resource>
-							<directory>target/dependency/META-INF</directory>
-						</resource>
-					</webResources>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<configuration>
-					<additionalProjectFacets>
-						<java>1.6</java>
-						<jst.web>2.5</jst.web>
-						<wst.jsdt.web>1.0</wst.jsdt.web>
-					</additionalProjectFacets>
-					<additionalProjectnatures>
-						<projectnature>
-							org.eclipse.wst.common.project.facet.core.nature
-                        </projectnature>
-					</additionalProjectnatures>
-				</configuration>
-				<extensions>false</extensions>
-				<inherited>false</inherited>
-			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
@@ -89,52 +37,16 @@
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.8.1</version>
 			<type>jar</type>
 			<scope>test</scope>
-			<optional>false</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-frontend-jaxws</artifactId>
-			<version>2.2.9</version>
-			<type>jar</type>
-			<scope>runtime</scope>
-			<optional>false</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-transports-http</artifactId>
-			<version>2.2.9</version>
-			<type>jar</type>
-			<scope>runtime</scope>
-			<optional>false</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>2.5.6</version>
-			<type>jar</type>
-			<scope>runtime</scope>
-			<optional>false</optional>
-		</dependency>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.1.1</version>
-			<type>jar</type>
-			<scope>compile</scope>
-			<optional>false</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<version>2.5.6</version>
-			<type>jar</type>
-			<scope>compile</scope>
-			<optional>false</optional>
 		</dependency>
 	</dependencies>
 </project>

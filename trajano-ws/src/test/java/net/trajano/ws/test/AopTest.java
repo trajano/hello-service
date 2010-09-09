@@ -4,6 +4,7 @@ import net.trajano.ws.helloservice.Hello;
 import net.trajano.ws.helloservice.impl.HelloImpl;
 import net.trajano.ws.schema.business.BaseType;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -16,6 +17,7 @@ public class AopTest {
 	}
 
 	@Test
+	@Ignore
 	public void withAop() throws Exception {
 		final ApplicationContext ctx = new ClassPathXmlApplicationContext(
 				"beans-aop.xml");

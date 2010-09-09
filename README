@@ -14,7 +14,11 @@ interface, integration test) in one project.  This is not recommended for
 real-life.  I would break things up in the following way:
 
 * Web Service container project.  This will contain all the web services for 
-the enterprise (?).  Here you would have the CXF servlet and cxf-servlet.xml
+the enterprise (?).  There should be no CXF or other WS runtimes here.
+We should be using whatever JAX-WS runtime is provided.  Bootstrap
+configuration should be in java:comp/env
+
+Here you would have the CXF servlet and cxf-servlet.xml
 files.  You would have the final bean configuration done here as well.
 WSDL and XSD contracts are also stored here.  Though they are not the source,
 the source would be the implementation project extracted using the

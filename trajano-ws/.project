@@ -1,6 +1,6 @@
 <projectDescription>
   <name>trajano-ws</name>
-  <comment>This is a container for various web services. NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
+  <comment>This is a container for various web services and provides handlers to do performance and audit logging. NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
   <projects>
     <project>hello-service</project>
   </projects>
