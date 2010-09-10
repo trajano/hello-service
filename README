@@ -18,12 +18,11 @@ the enterprise (?).  There should be no CXF or other WS runtimes here.
 We should be using whatever JAX-WS runtime is provided.  Bootstrap
 configuration should be in java:comp/env
 
-Here you would have the CXF servlet and cxf-servlet.xml
-files.  You would have the final bean configuration done here as well.
-WSDL and XSD contracts are also stored here.  Though they are not the source,
-the source would be the implementation project extracted using the
-maven-dependency-plugin, if it were an Ant project, it would simply just
-extract the file from there.
+Although JAX-WS allows for you to specify a wsdlLocation in the @WebService
+annotation it seems to only work in WEB-INF/wsdl and the standards do not
+explicitly state that this can be inside an included JAR's META-INF/wsdl
+folder.  This means the approach will require the maven-dependency-plugin
+to extract the files and put it in the folder.
 
 Ideally the grouping should be one per enterprise group.
 
