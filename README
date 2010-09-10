@@ -9,6 +9,14 @@ use Ant to do the builds, because there are more people who know Ant than
 Maven (caters to the lower denominator).  I would still try to use the Maven
 source structures if possible, at least on Eclipse it works.
 
+This example project utilizes a contract first development approach.  It also
+uses EJBs as the web service implementation for the end points rather than
+Web Applications.  The hypothesis is that you can keep the WSDLs with the EJB
+module.  Although you can do the same thing in a Web Application, the web
+application can do more than just web service itself.  So we have it broken
+up this way so only one set of business logic is provided and it will be 
+separated from any web related stuff.
+
 This example project lumps all levels (service implementation, service
 interface, integration test) in one project.  This is not recommended for
 real-life.  I would break things up in the following way:
