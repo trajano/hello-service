@@ -33,7 +33,7 @@ public class PerformanceHandler implements
 			final long t0 = startTimeInMilli.get();
 			final long t1 = System.currentTimeMillis();
 			log.info(MessageFormat.format("{0} {1}ms",
-					context.get(MessageContext.WSDL_OPERATION), t1 - t0));
+					context.get(MessageContext.WSDL_SERVICE), t1 - t0));
 		} else {
 			startTimeInMilli.set(System.currentTimeMillis());
 		}

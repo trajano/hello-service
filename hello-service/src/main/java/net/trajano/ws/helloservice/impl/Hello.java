@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Required;
 
 @Stateless
 @WebService(targetNamespace = "http://ws.trajano.net/HelloService/", endpointInterface = "net.trajano.ws.helloservice.Hello", wsdlLocation = "Hello.wsdl")
-@HandlerChain(file = "handler-chain.xml")
+@HandlerChain(file = "META-INF/handler-chain.xml")
 public class Hello implements net.trajano.ws.helloservice.Hello {
 
 	/**
