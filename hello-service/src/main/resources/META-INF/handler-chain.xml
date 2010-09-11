@@ -6,7 +6,7 @@
 	<!-- ====================== -->
 	<handler-chain>
 		<handler>
-			<handler-class>net.trajano.ws.helloservice.impl.PerformanceHandler</handler-class>
+			<handler-class xml:space="preserve">net.trajano.ws.helloservice.impl.PerformanceHandler</handler-class>
 		</handler>
 	</handler-chain>
 </handler-chains>
