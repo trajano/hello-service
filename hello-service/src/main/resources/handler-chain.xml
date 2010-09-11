@@ -4,8 +4,7 @@
 	<!-- ====================== -->
 	<handler-chain>
 		<handler>
-			<handler-class>net.trajano.ws.helloservice.impl.PerformanceHandler
-			</handler-class>
+			<handler-class>net.trajano.ws.helloservice.impl.PerformanceHandler</handler-class>
 		</handler>
 	</handler-chain>
 </handler-chains>
