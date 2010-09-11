@@ -53,7 +53,7 @@
 		</wsdl:operation>
 	</wsdl:binding>
 	<wsdl:service name="HelloService">
-		<wsdl:port name="DevPort" binding="tns:HelloBinding">
+		<wsdl:port name="HelloPort" binding="tns:HelloBinding">
 			<wsdl:documentation>This port is used for local testing on Jetty.
 			</wsdl:documentation>
 			<soap:address location="http://localhost:8080/hello" />

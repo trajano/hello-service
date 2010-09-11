@@ -3,7 +3,6 @@ package net.trajano.ws.helloservice.impl;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
 
-import net.trajano.ws.helloservice.Hello;
 import net.trajano.ws.helloservice.SayHelloFault;
 import net.trajano.ws.schema.business.BaseType;
 import net.trajano.ws.schema.business.DerivedType;
@@ -14,8 +13,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
 @Stateless
-@WebService(serviceName = "HelloService", name = "Hello", targetNamespace = "http://ws.trajano.net/HelloService/", endpointInterface = "net.trajano.ws.helloservice.Hello", wsdlLocation = "Hello.wsdl", portName = "DevPort")
-public class HelloImpl implements Hello {
+@WebService(targetNamespace = "http://ws.trajano.net/HelloService/", endpointInterface = "net.trajano.ws.helloservice.Hello", wsdlLocation = "Hello.wsdl")
+public class Hello implements net.trajano.ws.helloservice.Hello {
 
 	/**
 	 * Injected value.
