@@ -1,0 +1,11 @@
+<handler-chains xmlns="http://java.sun.com/xml/ns/javaee">
+	<!-- ====================== -->
+	<!-- service based handlers -->
+	<!-- ====================== -->
+	<handler-chain>
+		<handler>
+			<handler-class>net.trajano.ws.helloservice.impl.PerformanceHandler
+			</handler-class>
+		</handler>
+	</handler-chain>
+</handler-chains>

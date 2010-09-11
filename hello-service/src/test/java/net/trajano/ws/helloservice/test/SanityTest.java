@@ -1,8 +1,7 @@
 package net.trajano.ws.helloservice.test;
 
-import net.trajano.ws.helloservice.Hello;
 import net.trajano.ws.helloservice.SayHelloFault;
-import net.trajano.ws.helloservice.impl.HelloImpl;
+import net.trajano.ws.helloservice.impl.Hello;
 import net.trajano.ws.schema.business.BaseType;
 import net.trajano.ws.schema.business.DerivedType;
 
@@ -14,7 +13,7 @@ public class SanityTest {
 	public void doFault() throws Exception {
 		final Hello h;
 		{
-			final HelloImpl impl = new HelloImpl();
+			final Hello impl = new Hello();
 			impl.setHelloString("ABC");
 			h = impl;
 		}
@@ -27,7 +26,7 @@ public class SanityTest {
 	public void doHello() throws Exception {
 		final Hello h;
 		{
-			final HelloImpl impl = new HelloImpl();
+			final Hello impl = new Hello();
 			impl.setHelloString("ABC");
 			h = impl;
 		}

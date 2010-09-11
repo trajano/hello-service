@@ -29,6 +29,15 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<artifactId>maven-ear-plugin</artifactId>
+				<!-- Lock down plugin version for build reproducibility -->
+				<version>2.4.1</version>
+				<configuration>
+					<version>5</version>
+					<defaultJavaBundleDir>lib</defaultJavaBundleDir>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
 				<configuration>
@@ -51,9 +60,9 @@
 	<dependencies>
 		<dependency>
 			<groupId>net.trajano.webservice</groupId>
-			<artifactId>trajano-ws</artifactId>
+			<artifactId>hello-service</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
-			<type>war</type>
+			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
