@@ -8,7 +8,6 @@
 	<packaging>pom</packaging>
 	<modules>
 	<module>../trajano-enterprise</module>
-	<module>../trajano-ws</module>
 	<module>../hello-service</module>
 	</modules>
 </project>

@@ -2,7 +2,7 @@
   <name>trajano-enterprise</name>
   <comment>This is the enterprise archive. NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
   <projects>
-    <project>trajano-ws</project>
+    <project>hello-service</project>
   </projects>
   <buildSpec>
     <buildCommand>

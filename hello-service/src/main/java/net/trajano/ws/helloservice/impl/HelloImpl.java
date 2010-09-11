@@ -1,5 +1,6 @@
 package net.trajano.ws.helloservice.impl;
 
+import javax.ejb.Stateless;
 import javax.jws.WebService;
 
 import net.trajano.ws.helloservice.Hello;
@@ -12,6 +13,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
+@Stateless
 @WebService(endpointInterface = "net.trajano.ws.helloservice.Hello")
 public class HelloImpl implements Hello {
 
