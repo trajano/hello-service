@@ -14,7 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
 @Stateless
-@WebService(endpointInterface = "net.trajano.ws.helloservice.Hello")
+@WebService(serviceName = "HelloService", name = "Hello", targetNamespace = "http://ws.trajano.net/HelloService/", endpointInterface = "net.trajano.ws.helloservice.Hello", wsdlLocation = "Hello.wsdl", portName = "DevPort")
 public class HelloImpl implements Hello {
 
 	/**
