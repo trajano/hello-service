@@ -1,3 +1,30 @@
+Web Service Reference Implementation
+====================================
+
+This is a reference implementation of a web service that has the following
+requirements:
+
+* Contract First WSDL development [done]
+* Performance Logging [done]
+* Database connectivity (with JPA)
+* Asynchronous web service (if possible)
+* Simple web client
+* Simple command line client
+* ant build script
+
+It has the following technical objectives:
+* Leverage standards as much as possible.
+* Work with Eclipse JST
+* Work with Maven
+* Work with Spring, but keep Spring involvement minimal if a standard
+  option is available
+
+Notes on approach:
+* CXF usage was removed (though it is a better stack than the standard) as
+  a standard approach was available.
+* .classpath and other files are part of version control as there is no
+  good way of working with JST and Maven at the moment.
+
 When you checkout the project from GIT before using, run mvn package.
 
 Maven integration still sucks for Eclipse when doing anything that deals with
@@ -9,6 +36,9 @@ use Ant to do the builds, because there are more people who know Ant than
 Maven (caters to the lower denominator).  I would still try to use the Maven
 source structures if possible, at least on Eclipse it works.
 
+
+
+
 This example project utilizes a contract first development approach.  It also
 uses EJBs as the web service implementation for the end points rather than
 Web Applications.  The hypothesis is that you can keep the WSDLs with the EJB
@@ -16,6 +46,8 @@ module.  Although you can do the same thing in a Web Application, the web
 application can do more than just web service itself.  So we have it broken
 up this way so only one set of business logic is provided and it will be 
 separated from any web related stuff.
+
+As a bonus you get a Stateless Session Bean interface for free.
 
 This example project lumps all levels (service implementation, service
 interface, integration test) in one project.  This is not recommended for
