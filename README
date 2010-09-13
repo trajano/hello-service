@@ -10,6 +10,7 @@ requirements:
 * Asynchronous web service (if possible)
 * Simple web client
 * Simple command line client
+* Security (?)
 * ant build script
 
 It has the following technical objectives:

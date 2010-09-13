@@ -1,7 +1,6 @@
 package net.trajano.ws.helloservice.impl;
 
 import javax.ejb.Stateless;
-import javax.jws.HandlerChain;
 import javax.jws.WebService;
 
 import net.trajano.ws.helloservice.SayHelloFault;
@@ -11,16 +10,17 @@ import net.trajano.ws.schema.common.ApplicationFaultType;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 
 @Stateless
 @WebService(targetNamespace = "http://ws.trajano.net/HelloService/", endpointInterface = "net.trajano.ws.helloservice.Hello", wsdlLocation = "Hello.wsdl")
-@HandlerChain(file = "META-INF/handler-chain.xml")
 public class Hello implements net.trajano.ws.helloservice.Hello {
 
 	/**
 	 * Injected value.
 	 */
+	@Autowired
 	private String helloString;
 
 	/**

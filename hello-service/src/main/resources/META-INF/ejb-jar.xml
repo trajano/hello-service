@@ -8,11 +8,15 @@
 		<interceptor>
 			<interceptor-class>net.trajano.logging.Performance</interceptor-class>
 		</interceptor>
+		<interceptor>
+			<interceptor-class>org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor</interceptor-class>
+		</interceptor>
 	</interceptors>
 	<assembly-descriptor>
 		<interceptor-binding>
 			<ejb-name>*</ejb-name>
 			<interceptor-class>net.trajano.logging.Performance</interceptor-class>
+			<interceptor-class>org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor</interceptor-class>
 		</interceptor-binding>
 	</assembly-descriptor>
 </ejb-jar>

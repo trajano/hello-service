@@ -36,7 +36,7 @@ public class GlassFishTest {
 		final BaseType parameters = new BaseType();
 		parameters.setMessage("abc");
 		final DerivedType sayHello = h.sayHello(parameters);
-		Assert.assertEquals("{{HelloStrinCXFabc", sayHello.getSomeOther());
+		Assert.assertEquals("{{ejbabc", sayHello.getSomeOther());
 	}
 
 	// @Test
