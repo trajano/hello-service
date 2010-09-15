@@ -1,4 +1,4 @@
-package net.trajano.ws.helloservice.impl;
+package net.trajano.ws.helloservice.annotations;
 
 import javax.inject.Qualifier;
 

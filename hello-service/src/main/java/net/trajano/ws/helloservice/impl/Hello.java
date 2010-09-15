@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.jws.WebService;
 
 import net.trajano.ws.helloservice.SayHelloFault;
+import net.trajano.ws.helloservice.annotations.HelloString;
 import net.trajano.ws.schema.business.BaseType;
 import net.trajano.ws.schema.business.DerivedType;
 import net.trajano.ws.schema.common.ApplicationFaultType;
@@ -64,6 +65,7 @@ public class Hello implements net.trajano.ws.helloservice.Hello {
 	}
 
 	@Inject
+	@HelloString
 	public void setHelloString(final String helloString) {
 		log.debug("Injecting helloString = " + helloString);
 		this.helloString = helloString;
