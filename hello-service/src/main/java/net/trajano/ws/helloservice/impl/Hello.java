@@ -1,6 +1,7 @@
 package net.trajano.ws.helloservice.impl;
 
-import javax.ejb.Stateless;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.jws.WebService;
 
@@ -11,9 +12,9 @@ import net.trajano.ws.schema.common.ApplicationFaultType;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Required;
 
-@Stateless
+@Singleton
+@Startup
 @WebService(targetNamespace = "http://ws.trajano.net/HelloService/", endpointInterface = "net.trajano.ws.helloservice.Hello", wsdlLocation = "Hello.wsdl")
 public class Hello implements net.trajano.ws.helloservice.Hello {
 
@@ -22,7 +23,6 @@ public class Hello implements net.trajano.ws.helloservice.Hello {
 	 */
 	// @Autowired(required = true)
 	// @Qualifier("helloString")
-	@Inject
 	private String helloString;
 
 	/**
@@ -63,7 +63,7 @@ public class Hello implements net.trajano.ws.helloservice.Hello {
 		return r;
 	}
 
-	@Required
+	@Inject
 	public void setHelloString(final String helloString) {
 		log.debug("Injecting helloString = " + helloString);
 		this.helloString = helloString;

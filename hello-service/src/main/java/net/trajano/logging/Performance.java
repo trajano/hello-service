@@ -12,7 +12,7 @@ public class Performance {
 	/**
 	 * Logger.
 	 */
-	private final Log log = LogFactory.getLog(this.getClass());
+	private final Log log = LogFactory.getLog(Performance.class);
 
 	// private final ThreadLocal<Long> startTimeInMilli = new
 	// ThreadLocal<Long>();
