@@ -16,6 +16,6 @@ import javax.inject.Qualifier;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Qualifier
-public @interface HelloString {
+public @interface Mock {
 
 }

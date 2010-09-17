@@ -1,6 +1,7 @@
 package net.trajano.ws.helloservice.test;
 
 import net.trajano.ws.helloservice.SayHelloFault;
+import net.trajano.ws.helloservice.impl.Configurable;
 import net.trajano.ws.helloservice.impl.Hello;
 import net.trajano.ws.schema.business.BaseType;
 import net.trajano.ws.schema.business.DerivedType;
@@ -15,6 +16,7 @@ public class SanityTest {
 		{
 			final Hello impl = new Hello();
 			impl.setHelloString("ABC");
+			impl.setConfigurable(new Configurable());
 			h = impl;
 		}
 		final BaseType parameters = new DerivedType();
@@ -28,6 +30,7 @@ public class SanityTest {
 		{
 			final Hello impl = new Hello();
 			impl.setHelloString("ABC");
+			impl.setConfigurable(new Configurable());
 			h = impl;
 		}
 		final BaseType parameters = new DerivedType();

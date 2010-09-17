@@ -1,5 +1,9 @@
 package net.trajano.ws.helloservice.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
@@ -18,6 +22,13 @@ import org.apache.commons.logging.LogFactory;
 @Startup
 @WebService(targetNamespace = "http://ws.trajano.net/HelloService/", endpointInterface = "net.trajano.ws.helloservice.Hello", wsdlLocation = "Hello.wsdl")
 public class Hello implements net.trajano.ws.helloservice.Hello {
+
+	private Configurable configurable;
+	// @Inject
+	// public void setLongs(final List<Long> longs) {
+	// log.debug("Injecting longs = " + longs);
+	// this.longs = longs;
+	// }
 
 	/**
 	 * Injected value.
@@ -48,13 +59,23 @@ public class Hello implements net.trajano.ws.helloservice.Hello {
 	 */
 	private final Log log = LogFactory.getLog(this.getClass());
 
+	/**
+	 * An injected list of longs.
+	 */
+	private final List<Long> longs = new ArrayList<Long>();
+
 	public String getHelloString() {
 		return helloString;
+	}
+
+	public List<Long> getLongs() {
+		return Collections.unmodifiableList(longs);
 	}
 
 	@Override
 	public DerivedType sayHello(final BaseType parameters) throws SayHelloFault {
 		log.debug("Saying Hello");
+		log.debug("Saying Hello>>>" + configurable.getLong10());
 		if ("fault".equals(parameters.getOtherElement())) {
 			throw new SayHelloFault("got a hello fault",
 					new ApplicationFaultType());
@@ -65,8 +86,12 @@ public class Hello implements net.trajano.ws.helloservice.Hello {
 	}
 
 	@Inject
-	@HelloString
-	public void setHelloString(final String helloString) {
+	public void setConfigurable(final Configurable p) {
+		configurable = p;
+	}
+
+	@Inject
+	public void setHelloString(final @HelloString String helloString) {
 		log.debug("Injecting helloString = " + helloString);
 		this.helloString = helloString;
 	}
