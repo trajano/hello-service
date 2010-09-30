@@ -1,12 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <handler-chains xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee">
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/javaee_web_services_metadata_handler_2_0.xsd">
 	<!-- ====================== -->
 	<!-- service based handlers -->
 	<!-- ====================== -->
 	<handler-chain>
 		<handler>
-			<handler-class xml:space="preserve">net.trajano.ws.helloservice.impl.PerformanceHandler</handler-class>
+			<handler-name>Performance Handler</handler-name>
+			<handler-class>net.trajano.ws.helloservice.impl.PerformanceHandler</handler-class>
 		</handler>
 	</handler-chain>
 </handler-chains>
