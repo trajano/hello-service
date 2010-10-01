@@ -42,6 +42,10 @@ public class HelloImpl implements Hello {
 	 */
 	private final Log log = LogFactory.getLog(this.getClass());
 
+	public HelloImpl() {
+		System.out.println("$Id$");
+	}
+
 	public String getHelloString() {
 		return helloString;
 	}
