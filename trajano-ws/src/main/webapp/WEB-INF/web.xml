@@ -4,4 +4,10 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5" metadata-complete="false">
 	<display-name>hello-service</display-name>
+	<servlet>
+		<servlet-name>Hello</servlet-name>
+		<!-- <servlet-class>net.trajano.ws.helloservice.impl.HelloImpl</servlet-class> -->
+		<servlet-class>net.trajano.logging.InitServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 </web-app>

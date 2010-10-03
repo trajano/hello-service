@@ -8,8 +8,10 @@ import net.trajano.ws.schema.business.BaseType;
 import net.trajano.ws.schema.business.DerivedType;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class GlassFishTest {
 
 	/**
@@ -29,5 +31,9 @@ public class GlassFishTest {
 		parameters.setMessage("abc");
 		final DerivedType sayHello = h.sayHello(parameters);
 		Assert.assertEquals("{{HelloStrinCXFabc", sayHello.getSomeOther());
+	}
+
+	public static void main(String[] args) throws Exception {
+		new GlassFishTest().switchEndpointForGlassfish();
 	}
 }
