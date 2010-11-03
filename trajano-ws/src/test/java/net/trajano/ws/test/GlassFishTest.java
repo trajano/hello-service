@@ -29,7 +29,7 @@ public class GlassFishTest {
 	@Test
 	public void switchEndpointForGlassfish() throws Exception {
 		final HelloService helloService = new HelloService();
-		final Hello h = helloService.getHelloPort();
+		final Hello h = helloService.getDevPort();
 		((BindingProvider) h).getRequestContext().put(
 				BindingProvider.ENDPOINT_ADDRESS_PROPERTY,
 				"http://localhost:8080/HelloService/Hello");
