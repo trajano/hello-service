@@ -1,143 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema targetNamespace="http://ws.trajano.net/schema/business"
 	xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ws.trajano.net/schema/business"
-	xmlns:pref="http://ws.trajano.net/schema/common">
-	<import schemaLocation="common.xsd" namespace="http://ws.trajano.net/schema/common">
+	xmlns:ct="urn:trajano.net:ct:2">
+	<import schemaLocation="common.xsd" namespace="urn:trajano.net:ct:2">
 	</import>
+	<element name="applicationFault" type="ct:ApplicationFault"></element>
+	<element name="helloRequest">
+		<complexType>
+			<all>
+				<element name="uuid" type="ct:UUID"></element>
+				<element ref="ct:properties"></element>
+			</all>
+		</complexType>
+	</element>
+	<element name="helloResponse">
+		<complexType>
+			<all>
+				<element name="msg" type="string"></element>
+			</all>
+		</complexType>
+	</element>
 
-	<complexType name="BaseType">
-		<all>
-			<element name="Message" type="string" maxOccurs="1"
-				minOccurs="0">
-			</element>
-			<element name="OtherElement" type="string"></element>
-			<element name="Aggregate" type="tns:AggregatedType"></element>
-			<element name="SomeOther" type="string" maxOccurs="1"
-				minOccurs="0">
-			</element>
-		</all>
-	</complexType>
-
-	<complexType name="DerivedType">
-		<complexContent>
-			<restriction base="tns:BaseType">
-				<all>
-					<element name="Message" maxOccurs="1" minOccurs="1">
-						<simpleType>
-							<restriction base="string">
-								<minLength value="2"></minLength>
-								<maxLength value="5"></maxLength>
-							</restriction>
-						</simpleType>
-					</element>
-					<element name="OtherElement" type="string"></element>
-					<element name="Aggregate" type="tns:AggregatedType"></element>
-				</all>
-			</restriction>
-		</complexContent>
-	</complexType>
-
-	<element name="HelloRequest" type="tns:BaseType"></element>
-	<element name="HelloResponse" type="tns:DerivedType"></element>
-	<element name="ApplicationFault" type="pref:ApplicationFaultType"></element>
-
-	<complexType name="AggregatedType">
-		<sequence>
-			<element name="uuid" type="pref:UUIDType"></element>
-			<element name="anyString" type="string"></element>
-		</sequence>
-	</complexType>
-
-	<complexType name="DerivedCommonType">
-		<complexContent>
-			<restriction base="pref:CommonBaseType">
-				<all>
-					<element name="GenericString" type="string" minOccurs="1"
-						maxOccurs="1"></element>
-
-					<!-- <element name="AdditionalObjects" maxOccurs="1" minOccurs="0"> 
-						<complexType> <sequence> <element name="Object" type="pref:NestedType" maxOccurs="unbounded" 
-						minOccurs="0"> </element> </sequence> </complexType> </element> -->
-
-
-					<element name="Nested" type="tns:NestedType" maxOccurs="1"
-						minOccurs="1"></element>
-				</all>
-			</restriction>
-		</complexContent>
-	</complexType>
-
-	<complexType name="NestedType">
-		<complexContent>
-			<restriction base="pref:NestedType">
-				<sequence>
-					<element name="nestedString" type="language" maxOccurs="1"
-						minOccurs="1">
-					</element>
-					<element name="chained" type="pref:NestedType" maxOccurs="unbounded"
-						minOccurs="1"></element>
-				</sequence>
-			</restriction>
-		</complexContent>
-	</complexType>
-
-	<complexType name="ManyChoicesType">
-		<choice>
-			<element name="a" type="string"></element>
-			<element name="b" type="string"></element>
-			<element name="c" type="string"></element>
-			<element name="d" type="string"></element>
-			<element name="e" type="pref:NestedType"></element>
-			<element name="f" type="tns:NestedType"></element>
-			<element name="g" type="string"></element>
-		</choice>
-	</complexType>
-
-	<complexType name="LessChoicesType">
-		<complexContent>
-			<restriction base="tns:ManyChoicesType">
-				<choice>
-					<element name="d" type="string"></element>
-					<element name="e" type="tns:NestedType"></element>
-					<element name="f" type="tns:NestedType"></element>
-				</choice>
-			</restriction>
-		</complexContent>
-	</complexType>
-
-	<complexType name="DerivedChoicesType">
-		<complexContent>
-			<restriction base="pref:CommonChoicesType">
-				<choice>
-					<element name="d" type="string"></element>
-					<element name="e" type="tns:NestedType"></element>
-				</choice>
-			</restriction>
-		</complexContent>
-	</complexType>
-
-	<simpleType name="LimitString">
-		<restriction base="string">
-			<minLength value="1"></minLength>
-			<maxLength value="30"></maxLength>
-		</restriction>
-	</simpleType>
-
-	<simpleType name="EnumString">
-		<restriction base="tns:LimitString">
-			<enumeration value="D"></enumeration>
-			<enumeration value="E"></enumeration>
-			<enumeration value="FF"></enumeration>
-		</restriction>
-	</simpleType>
-
-	<element name="Derivation" type="tns:DerivedCommonType"></element>
-
-    <element name="TryOut"><complexType>
-	<all>
-		<element name="ManyChoices" type="tns:ManyChoicesType" minOccurs="0"></element>
-		<element name="LessChoices" type="tns:LessChoicesType" minOccurs="0"></element>
-		<element name="CommonChoices" type="pref:CommonChoicesType" minOccurs="0"></element>
-		<element name="DerivedChoices" type="tns:DerivedChoicesType" minOccurs="0"></element>
-	</all></complexType></element>
 </schema>

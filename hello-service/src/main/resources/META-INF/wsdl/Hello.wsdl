@@ -12,17 +12,17 @@
 	</wsdl:types>
 	<wsdl:message name="SayHelloRequest">
 		<wsdl:documentation>Say hello request</wsdl:documentation>
-		<wsdl:part name="parameters" element="app:HelloRequest">
+		<wsdl:part name="parameters" element="app:helloRequest">
 			<wsdl:documentation>say hello parameters</wsdl:documentation>
 		</wsdl:part>
 	</wsdl:message>
 	<wsdl:message name="SayHelloResponse">
-		<wsdl:documentation>resposnse parameters for the response
+		<wsdl:documentation>response parameters for the response
 		</wsdl:documentation>
-		<wsdl:part name="parameters" element="app:HelloResponse"></wsdl:part>
+		<wsdl:part name="parameters" element="app:helloResponse"></wsdl:part>
 	</wsdl:message>
 	<wsdl:message name="SayHelloFault">
-		<wsdl:part name="parameters" element="app:ApplicationFault"></wsdl:part>
+		<wsdl:part name="parameters" element="app:applicationFault"></wsdl:part>
 	</wsdl:message>
 	<wsdl:portType name="Hello">
 		<wsdl:documentation>Hello world sample</wsdl:documentation>

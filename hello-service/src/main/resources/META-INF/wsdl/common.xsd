@@ -1,78 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema targetNamespace="http://ws.trajano.net/schema/common"
-	xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ws.trajano.net/schema/common"
-	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0">
-	<annotation>
-		<appinfo>
-			<jaxb:globalBindings>
-				<jaxb:serializable uid="42" />
-			</jaxb:globalBindings>
-		</appinfo>
-		<documentation>Common schema. In theory stuff in here will be derived
-			and further restricted by clients.
-			http://ws.trajano.net/schema/
-			contains all the schema.
-			http://ws.trajano.net/fault contains fault
-			messages. One off types even if their restrictions are repeated are
-			going to be made anonymous types to keep them localized. However,
-			real types (those that would be used explicity rather than as part of
-			a complex type are made non-anonymous). However, if a type is going
-			to be extended or restricted, then all its complex child types must
-			not be
-			anonymous, otherwise it will prevent extension of sub-children.
-		</documentation>
-	</annotation>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="urn:trajano.net:ct:2" xmlns="urn:trajano.net:ct:2"
+	elementFormDefault="qualified">
+
+	<xs:annotation>
+		<!-- Documentation elements should be no more than 80 characters and have 
+			xml:space="preserve" to ensure proper formatting. -->
+		<xs:documentation xml:space="preserve">Common types (ct) schema. These types are common types used by applications and
+are not to be extended or restricted.  This schema will only contain types, 
+and abstract containment elements.  There will be be no other elements defined here.
+
+The purpose of this schema is to provide examples of the more advanced XML
+schema elements.
+
+Naming standards:
+* element names are lower case.  To conform to XHTML.
+* attribute names are lower case.  To conform to XHTML.
+* Types are title case and does not end with Type.  This prevents the word
+  Type from appearing in the generated code.
+* Enumerated types with static values are suffixed with Enum (e.g.
+  ErrorLevelEnum).  Having this separated allows the creation of new types
+  in the generated code.
+* Enumerated types with extension to support other values are not suffixed.
+  This is because they are not generated as enumerations anymore.
+
+Namespace naming standards
+* urn:trajano.net:[prescribed_prefix]:[version]
+* a point version (e.g. 2.1) provides extensions to existing types
+* there is no guarantee for backwards compatibility for non-point versions.
+		</xs:documentation>
+	</xs:annotation>
+
+	<xs:element name="properties">
+		<xs:annotation>
+			<xs:documentation xml:space="preserve">Container for property elements.  Ensures uniqueness on the name attribute.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="property" type="Property" minOccurs="0"
+					maxOccurs="unbounded"></xs:element>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:unique name="propertyName">
+			<xs:selector xpath="*"></xs:selector>
+			<xs:field xpath="@name"></xs:field>
+		</xs:unique>
+	</xs:element>
 
 
-	<complexType name="ApplicationFaultType">
-		<annotation>
-			<documentation>
-				Fault type for SOAP applications that provides
-				application context. This is what is normally thrown. It
-				should
-				contain a map of stuff. The objective is
-				simplicity rather than best
-				practice; which is to use a
-				separate schema rather than name value
+	<xs:complexType name="Property">
+		<xs:annotation>
+			<xs:documentation>This is a property. However, the
+				value
+				is made to be
+				typed. This element should be referred by a containing element.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="value" type="xs:anySimpleType" />
+			<xs:element name="text">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="preserve"></xs:whiteSpace>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="uri" type="xs:anyURI"></xs:element>
+			<xs:element name="date" type="xs:date"></xs:element>
+			<xs:element name="language" type="xs:language"></xs:element>
+			<xs:element name="uuid" type="UUID"></xs:element>
+			<xs:element name="amount" type="CurrencyAmount"></xs:element>
+		</xs:choice>
+		<xs:attribute name="name" type="xs:token"></xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="ApplicationFault">
+		<xs:annotation>
+			<xs:documentation xml:space="preserve">Fault type for SOAP applications that provides application context. This is
+what is normally thrown.
+
+It should contain a map of stuff. The objective is
+simplicity rather than best practice; which is to use a separate schema rather than name value
 				pairs although
 				there is no reason why we cannot have it.
 
-				An
-				ApplicationFaultType also contains itself in order to do chained or
+An ApplicationFaultType also contains itself in order to do chained or
 				for multiple validation messages.
-			</documentation>
-		</annotation>
-		<all>
-			<element name="ErrorCode" type="string" minOccurs="1"
-				maxOccurs="1">
-				<annotation>
-					<documentation>
-						This is the error code that represents the
-						message.
-						This is meant to be used by clients for
-						looking up localized
-						versions of fault messages
-						if any. This is made mandatory as this
-						fault
-						should provide proper application messages.
-					</documentation>
-				</annotation>
-			</element>
-			<element name="Message" type="string" maxOccurs="1"
-				minOccurs="1">
-				<annotation>
-					<documentation>
-						This is a non-localized message representing the
-						fault. It is meant for debugging problems and
-						not meant to be seen
-						by the client. This is
-						mandatory.
-					</documentation>
-				</annotation>
-			</element>
-			<element name="StackTrace" maxOccurs="1" minOccurs="0">
-				<annotation>
-					<documentation>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="stackTrace" maxOccurs="1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
 						This contains the stack trace represented as a
 						string. This is populated using
 						Exception.printStackTrace(PrintStream). This
@@ -82,167 +101,128 @@
 						contain
 						information that the service provider may not
 						want to show.
-					</documentation>
-				</annotation>
-				<simpleType>
-					<restriction base="string">
-						<whiteSpace value="preserve"></whiteSpace>
-					</restriction>
-				</simpleType>
-			</element>
-			<element name="ExtraInformation" type="tns:StringMapType"
-				maxOccurs="1" minOccurs="0">
-				<annotation>
-					<documentation>
-						Extra information that may be client specific.
-						The
-						data can be used to populate message
-						formats.
-					</documentation>
-				</annotation>
-			</element>
-			<element name="Level" minOccurs="1">
-				<annotation>
-					<documentation>
-						This is the error level. Generally it would be
-						ERRROR for the most part. WARN may be used for
-						validation warnings
-						and INFO may just be
-						information messages thrown via a fault. The
-						purpose of this is to show something on the
-						client end as to the
-						severity of the error as
-						understood by the application and not
-						necessarily an actual representation of the
-						severity of the error
-						itself.
-					</documentation>
-				</annotation>
-				<simpleType>
-					<restriction base="string">
-						<enumeration value="ERROR"></enumeration>
-						<enumeration value="WARNING"></enumeration>
-						<enumeration value="INFO"></enumeration>
-					</restriction>
-				</simpleType>
-			</element>
-			<element name="ChainedFaults" minOccurs="0" maxOccurs="1">
-				<complexType>
-					<sequence>
-						<element name="Fault" type="tns:ApplicationFaultType"
-							minOccurs="0" maxOccurs="unbounded"></element>
-					</sequence>
-				</complexType>
-			</element>
-		</all>
-	</complexType>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="preserve"></xs:whiteSpace>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element ref="properties" maxOccurs="1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:space="preserve"> Extra information that may be sent. This is built as a property list rather
+than using an any type to ensure inter-operability between different XML
+Schema binding stacks.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="chainedFaults" minOccurs="0" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="fault" type="ApplicationFault"
+							minOccurs="0" maxOccurs="unbounded"></xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:all>
+		<xs:attribute name="errorCode" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					This is the error code that represents the
+					message.
+					This is meant to be used by clients for
+					looking up
+					localized
+					versions of fault messages
+					if any. This is made mandatory
+					as this
+					fault
+					should provide proper application messages.
+					</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:token">
+					<xs:minLength value="1"></xs:minLength>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="message" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					This is a non-localized message representing the
+					fault. It is meant for debugging problems and
+					not meant to be seen
+					by the client. This is
+					mandatory.
+					</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"></xs:minLength>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="level" use="required" type="ErrorLevel">
+		</xs:attribute>
+	</xs:complexType>
 
-	<complexType name="StringMapType">
-		<annotation>
-			<documentation>
-				This is map data where you can provide a string key
-				and
-				string value pair. The objective is to keep things simple so it
-				was not made to use "any" type. However, there is no restriction to
-				prevent adding another element to derived classes.
-			</documentation>
-		</annotation>
-		<sequence>
-			<element name="Entry" minOccurs="0">
-				<complexType>
-					<all>
-						<element name="Name" minOccurs="1" maxOccurs="1">
-							<simpleType>
-								<restriction base="string">
-									<minLength value="1"></minLength>
-								</restriction>
-							</simpleType>
-						</element>
-						<element name="Value" minOccurs="1" maxOccurs="1">
-							<simpleType>
-								<restriction base="string">
-									<whiteSpace value="preserve"></whiteSpace>
-								</restriction>
-							</simpleType>
-						</element>
-					</all>
-				</complexType>
-			</element>
-		</sequence>
-	</complexType>
+	<xs:simpleType name="ErrorLevelEnum">
+		<xs:annotation>
+			<xs:documentation>
+				This is the error level. Generally it would be
+				ERRROR for the most part. WARNING may be used for
+				validation
+				warnings
+				and INFO may just be
+				information messages thrown via a
+				fault. The
+				purpose of this is to show something on the
+				client end as
+				to the
+				severity of the error as
+				understood by the application and not
+				necessarily an actual representation of the
+				severity of the error
+				itself.
+					</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="ERROR"></xs:enumeration>
+			<xs:enumeration value="WARNING"></xs:enumeration>
+			<xs:enumeration value="INFO"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ErrorLevel">
+		<xs:union memberTypes="xs:token ErrorLevelEnum"></xs:union>
+	</xs:simpleType>
 
-	<simpleType name="UUIDType">
-		<annotation>
-			<documentation>
+	<xs:simpleType name="Amount">
+		<xs:restriction base="xs:decimal">
+			<xs:fractionDigits value="2"></xs:fractionDigits>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="CurrencyAmount">
+		<xs:simpleContent>
+			<xs:extension base="Amount">
+				<xs:attribute name="currency" use="optional"></xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="UUID">
+		<xs:annotation>
+			<xs:documentation>
 				This is a Universally Unique ID number. This is
 				generated by the UUID function in Java.
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<pattern
-				value="[0-9a-f]{8}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{12}">
-			</pattern>
-			<length value="36"></length>
-		</restriction>
-	</simpleType>
-
-	<simpleType name="Amount">
-		<restriction base="decimal">
-			<totalDigits value="20"></totalDigits>
-			<fractionDigits value="2"></fractionDigits>
-			<minInclusive value="0"></minInclusive>
-		</restriction>
-	</simpleType>
-	<simpleType name="ExchangeRate">
-		<restriction base="decimal">
-			<totalDigits value="10"></totalDigits>
-			<fractionDigits value="4"></fractionDigits>
-			<minInclusive value="0"></minInclusive>
-		</restriction>
-	</simpleType>
-
-	<element name="ApplicationFault" type="tns:ApplicationFaultType"></element>
-
-	<complexType name="CommonBaseType">
-		<all>
-			<element name="GenericString" type="string" maxOccurs="1"
-				minOccurs="0">
-			</element>
-			<element name="SomeDecimal" type="decimal" maxOccurs="1"
-				minOccurs="0">
-			</element>
-			<element name="AdditionalObjects" maxOccurs="1" minOccurs="0">
-				<complexType>
-					<sequence>
-						<element name="Object" type="tns:NestedType" maxOccurs="unbounded"
-							minOccurs="0">
-						</element>
-					</sequence>
-				</complexType>
-			</element>
-			<element name="Nested" type="tns:NestedType" maxOccurs="1"
-				minOccurs="0"></element>
-		</all>
-	</complexType>
-
-	<complexType name="NestedType">
-		<sequence>
-			<element name="nestedString" type="string" maxOccurs="1"
-				minOccurs="0"></element>
-			<element name="chained" type="tns:NestedType" maxOccurs="unbounded"
-				minOccurs="0"></element>
-		</sequence>
-	</complexType>
-
-	<complexType name="CommonChoicesType">
-		<choice>
-			<element name="a" type="string"></element>
-			<element name="b" type="string"></element>
-			<element name="c" type="string"></element>
-			<element name="d" type="string"></element>
-			<element name="e" type="tns:NestedType"></element>
-			<element name="f" type="tns:NestedType"></element>
-			<element name="g" type="string"></element>
-		</choice>
-	</complexType>
-</schema>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:pattern
+				value="^[0-9a-f]{8}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{12}$">
+			</xs:pattern>
+			<xs:length value="36"></xs:length>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

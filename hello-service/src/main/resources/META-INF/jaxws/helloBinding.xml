@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings jaxb:version="2.1"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd ">
+
+	<jaxb:globalBindings>
+		<xjc:serializable uid="2" />
+	</jaxb:globalBindings>
+
+	<!-- Bind common types to a nicer package name -->
+	<jaxb:bindings schemaLocation="../wsdl/common.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="net.trajano.ws.ct"></jaxb:package>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+</jaxb:bindings>

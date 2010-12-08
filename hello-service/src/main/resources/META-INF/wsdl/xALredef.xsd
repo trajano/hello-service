@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="urn:xxx" xmlns="urn:xxx" xmlns:xal="urn:oasis:names:tc:ciq:xal:3"
+	xmlns:ct="urn:oasis:names:tc:ciq:ct:3" elementFormDefault="qualified">
+	<xs:annotation>
+		<xs:documentation>Redefines the address field to make it mandatory to
+			have a Locality</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="urn:oasis:names:tc:ciq:xal:3"
+		schemaLocation="http://docs.oasis-open.org/ciq/v3.0/prd03/xsd/default/xsd/xAL.xsd"></xs:import>
+
+	<xs:import namespace="urn:oasis:names:tc:ciq:ct:3"
+		schemaLocation="http://docs.oasis-open.org/ciq/v3.0/prd03/xsd/default/xsd/CommonTypes.xsd" />
+
+	<xs:simpleType name="SomeUnion">
+		<xs:union>
+			<xs:simpleType>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="a"></xs:enumeration>
+					<xs:enumeration value="b"></xs:enumeration>
+					<xs:enumeration value="c"></xs:enumeration>
+					<xs:enumeration value="d"></xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType>
+				<xs:restriction base="xs:token"></xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+
+	<xs:simpleType name="Restriction">
+		<xs:restriction base="SomeUnion">
+			<xs:enumeration value="a"></xs:enumeration>
+			<xs:enumeration value="b"></xs:enumeration>
+			<xs:enumeration value="c"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="ad">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="u" type="SomeUnion"></xs:element>
+				<xs:element name="r" type="Restriction"></xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -43,9 +43,9 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxws-maven-plugin</artifactId>
-				<version>1.10</version>
 				<configuration>
 					<wsdlDirectory>${basedir}/src/main/resources/META-INF/wsdl</wsdlDirectory>
+					<bindingDirectory>${basedir}/src/main/resources/META-INF/jaxws</bindingDirectory>
 				</configuration>
 				<executions>
 					<execution>

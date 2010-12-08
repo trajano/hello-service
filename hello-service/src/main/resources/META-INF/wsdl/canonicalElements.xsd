@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://example/canon" xmlns="http://example/canon"
+	elementFormDefault="qualified">
+	<xs:element name="configuration" type="ConfigurationType" />
+	<xs:complexType name="ConfigurationType">
+		<xs:all>
+			<xs:element ref="artifacts" minOccurs="0" />
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="artifacts" type="ArtifactsType" />
+
+	<xs:complexType name="ArtifactsType">
+		<xs:sequence>
+			<xs:element name="artifact" type="ArtifactType" minOccurs="1"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ArtifactType">
+		<xs:all>
+			<xs:element name="artifactId" type="xs:token"></xs:element>
+			<xs:element name="version" type="xs:token"></xs:element>
+			<xs:element name="groupId" type="xs:token" minOccurs="0"></xs:element>
+		</xs:all>
+	</xs:complexType>
+</xs:schema>

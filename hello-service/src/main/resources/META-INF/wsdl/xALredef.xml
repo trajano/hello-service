@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:ad xmlns:p="urn:xxx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:xxx xALredef.xsd ">
+  <p:u>The rain in Spain</p:u>
+  <p:r>a</p:r>
+</p:ad>

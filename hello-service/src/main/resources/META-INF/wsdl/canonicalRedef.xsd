@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" xmlns:xal="urn:oasis:names:tc:ciq:xal:3">
+	<xs:import namespace="urn:oasis:names:tc:ciq:xal:3"
+		schemaLocation="http://docs.oasis-open.org/ciq/v3.0/prd03/xsd/default/xsd/xAL.xsd"></xs:import>
+
+	<xs:redefine schemaLocation="canonical.xsd">
+
+		<xs:complexType name="ConfigurationType">
+			<xs:complexContent>
+				<xs:restriction base="ConfigurationType">
+					<xs:all>
+						<xs:element name="artifacts" type="ArtifactsType"
+							minOccurs="1" />
+						<xs:element name="projectId" type="xs:token" minOccurs="1" />
+						<xs:element name="address" type="xal:AddressType"
+							minOccurs="1"></xs:element>
+
+					</xs:all>
+				</xs:restriction>
+			</xs:complexContent>
+		</xs:complexType>
+		<xs:complexType name="ArtifactsType">
+			<xs:complexContent>
+				<xs:restriction base="ArtifactsType">
+					<xs:sequence>
+						<xs:element name="artifact" type="ArtifactType"
+							minOccurs="20" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:restriction>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:redefine>
+
+</xs:schema>
