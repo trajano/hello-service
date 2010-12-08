@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema targetNamespace="http://ws.trajano.net/schema/business"
-	xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ws.trajano.net/schema/business"
-	xmlns:ct="urn:trajano.net:ct:2.0">
-	<import schemaLocation="ct_2.0.0.xsd" namespace="urn:trajano.net:ct:2.0">
-	</import>
-	<element name="applicationFault" type="ct:ApplicationFault"></element>
-	<element name="helloRequest">
-		<complexType>
-			<all>
-				<element name="uuid" type="ct:Uuid"></element>
-				<element ref="ct:properties"></element>
-			</all>
-		</complexType>
-	</element>
-	<element name="helloResponse">
-		<complexType>
-			<all>
-				<element name="msg" type="string"></element>
-			</all>
-		</complexType>
-	</element>
-
-</schema>
+<xsd:schema targetNamespace="http://ws.trajano.net/schema/business"
+xmlns:ct="urn:trajano.net:ct:2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+xmlns="http://ws.trajano.net/schema/business">
+    <xsd:import schemaLocation="ct_2.0.0.xsd" namespace="urn:trajano.net:ct:2.0">
+	</xsd:import>
+	<xsd:redefine schemaLocation="bbm_1.0.0.xsd"></xsd:redefine>
+	<xsd:element name="applicationFault" type="ct:ApplicationFault"></xsd:element>
+	<xsd:element name="helloRequest">
+		<xsd:complexType>
+			<xsd:all>
+				<xsd:element name="uuid" type="ct:Uuid"></xsd:element>
+				<xsd:element ref="ct:properties"></xsd:element>
+			</xsd:all>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="helloResponse">
+		<xsd:complexType>
+			<xsd:all>
+				<xsd:element name="msg" type="xsd:string"></xsd:element>
+			</xsd:all>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="oko" type="Account"></xsd:element>
+</xsd:schema>

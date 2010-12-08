@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:oko xmlns:p="http://ws.trajano.net/schema/business" xmlns:p1="urn:trajano.net:ct:2.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://ws.trajano.net/schema/business business.xsd "
+	xsi:type="p:CanadianBankAccount">
+	<p:accountNO>42342</p:accountNO>
+	<p:transitNO>34233</p:transitNO>
+	<p:financialInstituionNO>004</p:financialInstituionNO>
+	<!-- 
+	account + amount
+	account + amount
+	 -->
+</p:oko>

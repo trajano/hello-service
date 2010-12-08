@@ -5,11 +5,13 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd ">
 
 	<jaxb:globalBindings>
-		<xjc:serializable uid="2" />
+		<!-- uid should be based on the application version number not the schemas 
+			used. -->
+		<xjc:serializable uid="1000" />
 	</jaxb:globalBindings>
 
 	<!-- Bind common types to a nicer package name -->
-	<jaxb:bindings schemaLocation="../wsdl/common.xsd">
+	<jaxb:bindings schemaLocation="../wsdl/ct_2.0.0.xsd">
 		<jaxb:schemaBindings>
 			<jaxb:package name="net.trajano.ws.ct"></jaxb:package>
 		</jaxb:schemaBindings>

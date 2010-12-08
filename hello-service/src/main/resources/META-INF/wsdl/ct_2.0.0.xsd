@@ -30,6 +30,10 @@ Naming standards:
   in the generated code.
 * Enumerated types with extension to support other values are not suffixed.
   This is because they are not generated as enumerations anymore.
+* Identifiers are suffixed as ID
+* Reference numbers such as account number is suffixed with NO (e.g.
+  AccountNO)
+* Enumeration values are all capitals unless there is a business requirement.
 
 Namespace naming standards:
 * urn:trajano.net:[prescribed_prefix]:[version]
@@ -38,6 +42,15 @@ Namespace naming standards:
 * namespace version only goes up to two components.  The third component of
   the version is used for documentation fixes that to not change any
   structure.
+  
+Coding standards:
+* use the schema namespace "xs" and the target namespace have no namespace
+  prefix. This will allow derivations to just copy and paste more easily.
+* do not redefine XML schema basic types unless there is a change or business
+  meaning added.  For example: do not redefine xs:date as Date, but xs:token as
+  AccountNO is okay.
+* use xml:space="preserve" to prevent reformatting issues.
+* Documentation text should not exceed 80 characters per line.
 		</xs:documentation>
 	</xs:annotation>
 

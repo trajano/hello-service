@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tns:applicationFault errorCode="token" level="ERRORx"
-	message="Some Message" xmlns:p="urn:trajano.net:ct:2" xmlns:tns="http://ws.trajano.net/schema/business"
+	message="Some Message" xmlns:p="urn:trajano.net:ct:2.0" xmlns:tns="http://ws.trajano.net/schema/business"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://ws.trajano.net/schema/business business.xsd ">
 	<p:properties>

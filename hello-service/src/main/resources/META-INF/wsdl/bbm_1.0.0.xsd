@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:ct="urn:trajano.net:ct:2.0" elementFormDefault="qualified">
+	<xs:annotation>
+		<xs:documentation xml:space="preserve">This is the Base Business Model (bbm) schema.  The purpose of this schema is
+to document cardinality used at an enterprise level.  Unlike the ct schema,
+this will not have a namespace defined.  It is meant to be redefined with
+restrictions by other schemas that are application specific.
+
+The restriction is primarily used to make mandatory fields mandatory or
+restrict enumerations or choices to a more restrictive subset.
+
+All elements, unless there is explicit documentation, are to be made optional.
+Element and type naming follow the one documented in the ct schema.  File
+version standards also follow the ct schema standards.  The maxOccurs is either
+1 or unbounded.
+
+Most elements are going to be derived by extension, so the content model is 
+sequence unless it is known that it will not be extended.
+
+Like ct, there are only types and aggregate elements, but no elements that
+are meant to be used as a root document.</xs:documentation>
+	</xs:annotation>
+
+	<xs:import schemaLocation="ct_2.0.0.xsd" namespace="urn:trajano.net:ct:2.0" />
+
+	<xs:complexType name="Account">
+		<xs:annotation>
+			<xs:documentation xml:space="preserve">Generic account type.  The element must be defined as a sequence in order for
+derivation by extension to work.  Extensions must arrange the elements from
+more specific to less specific (e.g. accountNO to transitNO to
+financialInstitutionNO).</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="accountNO" type="xs:token" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:space="preserve">Although this is designated as a number, it may contain alpha numeric data.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CanadianBankAccount">
+		<xs:annotation>
+			<xs:documentation>This represents a Canadian bank account which is
+				based on the CPA format.
+
+				The additional elements are using token with
+				a pattern that verifies
+				that is
+				all digits rather than using
+				positiveInteger types as we want to
+				enforce
+				clients to send the
+				leading zeros for the numbers.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Account">
+				<xs:sequence>
+					<xs:element name="transitNO" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:token">
+								<xs:pattern value="\d\d\d\d\d"></xs:pattern>
+								<xs:length value="5"></xs:length>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="financialInstituionNO" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:token">
+								<xs:pattern value="\d\d\d"></xs:pattern>
+								<xs:length value="3"></xs:length>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="UsBankAccount">
+		<xs:complexContent>
+			<xs:extension base="Account">
+				<xs:sequence>
+					<xs:element name="sortCode" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:token">
+								<xs:pattern value="\d\d\d\d\d"></xs:pattern>
+								<xs:length value="5"></xs:length>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="bankNO" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:token">
+								<xs:pattern value="\d\d\d"></xs:pattern>
+								<xs:length value="3"></xs:length>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="FinancialComponent">
+		<xs:annotation>
+			<xs:documentation>This represents a component in a financial
+				transaction.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="account" type="Account"></xs:element>
+			<xs:element name="amount" type="ct:CurrencyAmount"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Event">
+	
+	</xs:complexType>
+	
+	<xs:complexType name="FinancialTransferComponent">
+		<xs:annotation>
+			<xs:documentation>This represents a transfer component. This is a
+				Financial component with a direction.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="FinancialComponent">
+				<xs:sequence>
+					<xs:element name="role">
+						<xs:annotation>
+							<xs:documentation>Role of the component</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:token">
+								<xs:enumeration value="SOURCE">
+									<xs:annotation>
+										<xs:documentation>Transfer source</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+								<xs:enumeration value="TARGET">
+									<xs:annotation>
+										<xs:documentation>Transfer target</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>
