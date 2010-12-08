@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="urn:trajano.net:ct:2" xmlns="urn:trajano.net:ct:2"
+	targetNamespace="urn:trajano.net:ct:2.0" xmlns="urn:trajano.net:ct:2.0"
 	elementFormDefault="qualified">
 
 	<xs:annotation>
@@ -13,21 +13,31 @@ and abstract containment elements.  There will be be no other elements defined h
 The purpose of this schema is to provide examples of the more advanced XML
 schema elements.
 
+File naming and version standards:
+* Follow Java conventions for versioning.
+* File name starts with the prescribed prefix followed by an underscore
+  then the version in v.v.v format.  All three digits have to be put in
+  even if only the first value is used in the namespace.
+
 Naming standards:
 * element names are lower case.  To conform to XHTML.
 * attribute names are lower case.  To conform to XHTML.
 * Types are title case and does not end with Type.  This prevents the word
   Type from appearing in the generated code.
+* Acronyms are treated as individual words, e.g. FooUrl or UuidString
 * Enumerated types with static values are suffixed with Enum (e.g.
   ErrorLevelEnum).  Having this separated allows the creation of new types
   in the generated code.
 * Enumerated types with extension to support other values are not suffixed.
   This is because they are not generated as enumerations anymore.
 
-Namespace naming standards
+Namespace naming standards:
 * urn:trajano.net:[prescribed_prefix]:[version]
 * a point version (e.g. 2.1) provides extensions to existing types
 * there is no guarantee for backwards compatibility for non-point versions.
+* namespace version only goes up to two components.  The third component of
+  the version is used for documentation fixes that to not change any
+  structure.
 		</xs:documentation>
 	</xs:annotation>
 
@@ -68,7 +78,7 @@ Namespace naming standards
 			<xs:element name="uri" type="xs:anyURI"></xs:element>
 			<xs:element name="date" type="xs:date"></xs:element>
 			<xs:element name="language" type="xs:language"></xs:element>
-			<xs:element name="uuid" type="UUID"></xs:element>
+			<xs:element name="uuid" type="Uuid"></xs:element>
 			<xs:element name="amount" type="CurrencyAmount"></xs:element>
 		</xs:choice>
 		<xs:attribute name="name" type="xs:token"></xs:attribute>
@@ -211,7 +221,7 @@ Schema binding stacks.
 		</xs:simpleContent>
 	</xs:complexType>
 
-	<xs:simpleType name="UUID">
+	<xs:simpleType name="Uuid">
 		<xs:annotation>
 			<xs:documentation>
 				This is a Universally Unique ID number. This is

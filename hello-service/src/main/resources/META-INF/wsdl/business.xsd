@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema targetNamespace="http://ws.trajano.net/schema/business"
 	xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ws.trajano.net/schema/business"
-	xmlns:ct="urn:trajano.net:ct:2">
-	<import schemaLocation="common.xsd" namespace="urn:trajano.net:ct:2">
+	xmlns:ct="urn:trajano.net:ct:2.0">
+	<import schemaLocation="ct_2.0.0.xsd" namespace="urn:trajano.net:ct:2.0">
 	</import>
 	<element name="applicationFault" type="ct:ApplicationFault"></element>
 	<element name="helloRequest">
 		<complexType>
 			<all>
-				<element name="uuid" type="ct:UUID"></element>
+				<element name="uuid" type="ct:Uuid"></element>
 				<element ref="ct:properties"></element>
 			</all>
 		</complexType>

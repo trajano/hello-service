@@ -6,12 +6,12 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import net.trajano.ws.helloservice.SayHelloFault;
 import net.trajano.ws.helloservice.impl.Configurable;
 import net.trajano.ws.helloservice.impl.Hello;
-import net.trajano.ws.schema.business.BaseType;
-import net.trajano.ws.schema.business.DerivedType;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Document;
+
+import sun.reflect.generics.tree.BaseType;
 
 public class SanityTest {
 	@Test(expected = SayHelloFault.class)
@@ -23,8 +23,8 @@ public class SanityTest {
 			impl.setConfigurable(new Configurable());
 			h = impl;
 		}
-		final BaseType parameters = new DerivedType();
-		parameters.setOtherElement("fault");
+
+		final net.trajano.ws.helloservice.impl.BaseType parameters;
 		h.sayHello(parameters);
 	}
 
