@@ -16,7 +16,8 @@ version standards also follow the ct schema standards.  The maxOccurs is either
 1 or unbounded.
 
 Most elements are going to be derived by extension, so the content model is 
-sequence unless it is known that it will not be extended.
+sequence unless it is known that it will not be extended.  This is a limitation
+of the XML Schema.
 
 Like ct, there are only types and aggregate elements, but no elements that
 are meant to be used as a root document.</xs:documentation>
@@ -117,9 +118,38 @@ financialInstitutionNO).</xs:documentation>
 	</xs:complexType>
 
 	<xs:complexType name="Event">
-	
+		<xs:annotation>
+			<xs:documentation>This represents a business event. A business event
+				represents a either a point in time or a period.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="effectiveTS" type="xs:dateTime"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>timestamp when this event is effective. It is
+						used in the following scenario: a person has
+						been living in UK from Jan to April, but we only register it on
+						March so it is only effective starting March even though the person
+						had lived longer there.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="startTS" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>timestamp when this event had started.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="endTS" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>timestamp when this event finishes.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
 	</xs:complexType>
-	
+
 	<xs:complexType name="FinancialTransferComponent">
 		<xs:annotation>
 			<xs:documentation>This represents a transfer component. This is a
