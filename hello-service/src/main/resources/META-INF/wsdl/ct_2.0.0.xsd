@@ -33,10 +33,16 @@ Naming standards:
 * Identifiers are suffixed as ID
 * Reference numbers such as account number is suffixed with NO (e.g.
   AccountNO)
-* DateTime (aka as Timestamps) are suffixed by TS
+* DateTime (aka as Timestamps) are suffixed by TS.  It was chosen over DT
+  because some people use DT as a suffix for Date (which we are not doing) and
+  TS is less ambiguous.
 * Ranges are named "startXXX" and "endXXX".  Do not use from/to, start/finish.
-* Dates are suffixed by Date (not DT)
-* Enumeration values are all capitals unless there is a business requirement.
+* Dates are suffixed by Date (not DT).   It was chosen over DT
+  because some people use DT as a suffix for DateTime (which we are not doing)
+  and Date is less ambiguous.
+* Times are suffixed by TM
+* Enumeration values are in sentence case unless there is a business
+  requirement.
 
 Namespace naming standards:
 * urn:trajano.net:[prescribed_prefix]:[version]
@@ -54,8 +60,29 @@ Coding standards:
   AccountNO is okay.
 * use xml:space="preserve" to prevent reformatting issues.
 * Documentation text should not exceed 80 characters per line.
+* Use attributes for enumerations if possible.
+* Use tokens for enumerations if possible.
+* Use xml:lang to denote language specific values rather than creating a custom
+  attribute.
+* Do not create an ID type element to represent a unique instance.  Use xml:id.
+
+When to use attributes vs. elements:
+* Use elements for long running text (usually those of string or
+  normalizedString types) 
+* Do not use an attribute if there is grouping of two values (e.g.
+  eventStartDate and eventEndDate) for an element.  In the previous example,
+  there should be a new element for "event" which may contain the startDate and
+  endDate attributes.
+* Use elements if the type will be complex.
+* Use attributes if the value is a simple type and does not repeat.
 		</xs:documentation>
 	</xs:annotation>
+	<xs:import namespace="http://www.w3.org/XML/1998/namespace"
+		schemaLocation="http://www.w3.org/2001/xml.xsd">
+		<xs:annotation>
+			<xs:documentation>Provides xml:lang.</xs:documentation>
+		</xs:annotation>
+	</xs:import>
 
 	<xs:element name="properties">
 		<xs:annotation>
@@ -73,13 +100,10 @@ Coding standards:
 		</xs:unique>
 	</xs:element>
 
-
 	<xs:complexType name="Property">
 		<xs:annotation>
-			<xs:documentation>This is a property. However, the
-				value
-				is made to be
-				typed. This element should be referred by a containing element.
+			<xs:documentation xml:space="preserve">This is a property. However, the value is made to be
+typed. This element should be referred by a containing element.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:choice>
@@ -95,6 +119,7 @@ Coding standards:
 			<xs:element name="date" type="xs:date"></xs:element>
 			<xs:element name="language" type="xs:language"></xs:element>
 			<xs:element name="uuid" type="Uuid"></xs:element>
+			<xs:element name="version" type="Version"></xs:element>
 			<xs:element name="amount" type="CurrencyAmount"></xs:element>
 		</xs:choice>
 		<xs:attribute name="name" type="xs:token"></xs:attribute>
@@ -105,6 +130,9 @@ Coding standards:
 			<xs:documentation xml:space="preserve">Fault type for SOAP applications that provides application context. This is
 what is normally thrown.
 
+The sequence model was used rather than all in order to support group
+references.
+
 It should contain a map of stuff. The objective is
 simplicity rather than best practice; which is to use a separate schema rather than name value
 				pairs although
@@ -114,7 +142,8 @@ An ApplicationFaultType also contains itself in order to do chained or
 				for multiple validation messages.
 			</xs:documentation>
 		</xs:annotation>
-		<xs:all>
+		<xs:sequence>
+			<xs:group ref="MessageGroup"></xs:group>
 			<xs:element name="stackTrace" maxOccurs="1" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>
@@ -151,40 +180,18 @@ Schema binding stacks.
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-		</xs:all>
+			<xs:group ref="DescriptionGroup"></xs:group>
+		</xs:sequence>
 		<xs:attribute name="errorCode" use="required">
 			<xs:annotation>
-				<xs:documentation>
-					This is the error code that represents the
-					message.
-					This is meant to be used by clients for
-					looking up
-					localized
-					versions of fault messages
-					if any. This is made mandatory
-					as this
-					fault
-					should provide proper application messages.
-					</xs:documentation>
+				<xs:documentation xml:space="preserve">
+This is the error code that represents the message. This is meant to be used by
+clients for looking up localized versions of fault messages if any. This is
+made mandatory to ensure there is a proper error value even if it is just a
+code.</xs:documentation>
 			</xs:annotation>
 			<xs:simpleType>
 				<xs:restriction base="xs:token">
-					<xs:minLength value="1"></xs:minLength>
-				</xs:restriction>
-			</xs:simpleType>
-		</xs:attribute>
-		<xs:attribute name="message" use="required">
-			<xs:annotation>
-				<xs:documentation>
-					This is a non-localized message representing the
-					fault. It is meant for debugging problems and
-					not meant to be seen
-					by the client. This is
-					mandatory.
-					</xs:documentation>
-			</xs:annotation>
-			<xs:simpleType>
-				<xs:restriction base="xs:string">
 					<xs:minLength value="1"></xs:minLength>
 				</xs:restriction>
 			</xs:simpleType>
@@ -248,4 +255,78 @@ suffix because of aethetic reasons.</xs:documentation>
 			<xs:length value="36" />
 		</xs:restriction>
 	</xs:simpleType>
+
+	<xs:simpleType name="Version">
+		<xs:annotation>
+			<xs:documentation xml:space="preserve">This represents a version.  It only uses numbers seperated by periods as that
+makes it easier to do sorting opererations.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:pattern value="^(\d+\.)+\d+$">
+			</xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<xs:complexType name="LocalizedString">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute ref="xml:lang" use="required">
+					<xs:annotation>
+						<xs:documentation xml:space="preserve">This attribute is required even if the value is "".</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:group name="DescriptionGroup">
+		<xs:annotation>
+			<xs:documentation xml:space="preserve">This provides a simple text describing an object or multiple text that provide
+different language versions of a description.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="description" minOccurs="0" type="xs:string"></xs:element>
+			<xs:element name="localizedDescription" minOccurs="0"
+				type="LocalizedString" maxOccurs="unbounded"></xs:element>
+		</xs:choice>
+	</xs:group>
+
+	<xs:group name="MessageGroup">
+		<xs:annotation>
+			<xs:documentation xml:space="preserve">This provides a simple text describing an object or multiple text that provide
+different language versions of a message.  Unlike descriptions, messages must
+have some text.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="message" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"></xs:minLength>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="localizedMessage" minOccurs="0"
+				maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:restriction base="LocalizedString">
+							<xs:minLength value="1"></xs:minLength>
+							<xs:attribute ref="xml:lang" use="required"></xs:attribute>
+						</xs:restriction>
+					</xs:simpleContent>
+				</xs:complexType>
+
+			</xs:element>
+		</xs:choice>
+	</xs:group>
+
+	<xs:attributeGroup name="DateRangeGroup">
+		<xs:attribute name="startDate" type="xs:date" use="optional"></xs:attribute>
+		<xs:attribute name="endDate" type="xs:date" use="optional"></xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="DateTimeRangeGroup">
+		<xs:attribute name="startTS" type="xs:dateTime" use="optional"></xs:attribute>
+		<xs:attribute name="endTS" type="xs:dateTime" use="optional"></xs:attribute>
+	</xs:attributeGroup>
 </xs:schema>

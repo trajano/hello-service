@@ -104,6 +104,11 @@ financialInstitutionNO).</xs:documentation>
 		</xs:complexContent>
 	</xs:complexType>
 
+	<xs:element name="account" type="Account"></xs:element>
+	<xs:element name="canadianBankAccount" type="CanadianBankAccount"
+		substitutionGroup="account"></xs:element>
+	<xs:element name="usBankAccount" type="UsBankAccount"
+		substitutionGroup="account"></xs:element>
 
 	<xs:complexType name="FinancialComponent">
 		<xs:annotation>
@@ -112,41 +117,109 @@ financialInstitutionNO).</xs:documentation>
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="account" type="Account"></xs:element>
-			<xs:element name="amount" type="ct:CurrencyAmount"></xs:element>
+			<xs:element ref="account" minOccurs="0"></xs:element>
+			<xs:element name="amount" type="ct:CurrencyAmount"
+				minOccurs="0"></xs:element>
+			<xs:group ref="ct:DescriptionGroup"></xs:group>
 		</xs:sequence>
 	</xs:complexType>
 
 	<xs:complexType name="Event">
 		<xs:annotation>
-			<xs:documentation>This represents a business event. A business event
-				represents a either a point in time or a period.
+			<xs:documentation xml:space="preserve">This represents a business event. A business event represents a either a point
+in time or a period. Time components for both Date and DateTime are provided to
+allow clients to choose which precision they would require.
+
+This violates the coding standard rule for attributes, but the violation is
+needed as you cannot have choices of attributes in XML schema language.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="effectiveTS" type="xs:dateTime"
-				minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>timestamp when this event is effective. It is
-						used in the following scenario: a person has
-						been living in UK from Jan to April, but we only register it on
-						March so it is only effective starting March even though the person
-						had lived longer there.
+			<xs:choice>
+				<xs:element name="effectiveDate" type="xs:date"
+					minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Date when this event is effective. It is
+							used in
+							the following scenario: a person has
+							been living in UK from Jan to
+							April, but we only register it on
+							March so it is only effective
+							starting March even though the person
+							had lived longer there.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="effectiveTS" type="xs:dateTime"
+					minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>timestamp when this event is effective. It is
+							used in the following scenario: a person has
+							been living in UK
+							from Jan to April, but we only register it on
+							March so it is only
+							effective starting March even though the person
+							had lived longer
+							there.
 					</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="startTS" type="xs:dateTime" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>timestamp when this event had started.
-					</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="endTS" type="xs:dateTime" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>timestamp when this event finishes.
-					</xs:documentation>
-				</xs:annotation>
-			</xs:element>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:choice>
+				<xs:element name="date" type="xs:date" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Date when this event had started.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="timestamp" type="xs:dateTime"
+					minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>timestamp when this event had started.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:sequence>
+					<xs:annotation>
+						<xs:documentation>Date range for the event.
+						</xs:documentation>
+					</xs:annotation>
+					<xs:element name="startDate" type="xs:date" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Date when this event had started.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="endDate" type="xs:date" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Date when this event finishes. Please note
+								that
+								this represents the end of the day for the date. (e.g.
+								startDate
+								= 1/1 and endDate = 1/1 represent one single day).
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:sequence>
+					<xs:annotation>
+						<xs:documentation>Timestamp range for the event.
+						</xs:documentation>
+					</xs:annotation>
+					<xs:element name="startTS" type="xs:dateTime" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>timestamp when this event had started.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="endTS" type="xs:dateTime" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>timestamp when this event finishes.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -165,12 +238,12 @@ financialInstitutionNO).</xs:documentation>
 						</xs:annotation>
 						<xs:simpleType>
 							<xs:restriction base="xs:token">
-								<xs:enumeration value="SOURCE">
+								<xs:enumeration value="Source">
 									<xs:annotation>
 										<xs:documentation>Transfer source</xs:documentation>
 									</xs:annotation>
 								</xs:enumeration>
-								<xs:enumeration value="TARGET">
+								<xs:enumeration value="Target">
 									<xs:annotation>
 										<xs:documentation>Transfer target</xs:documentation>
 									</xs:annotation>
@@ -182,4 +255,94 @@ financialInstitutionNO).</xs:documentation>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
+
+	<xs:complexType name="FinancialTransferEvent">
+		<xs:annotation>
+			<xs:documentation>This represents a financial transfer event. This
+				combines 0 to many FinancialTransfer components. This allows having
+				multiple sources transfered to multiple targets.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Event">
+				<xs:sequence>
+					<xs:element name="components">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="component" type="FinancialTransferComponent"
+									minOccurs="0" maxOccurs="unbounded"></xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="Organization">
+		<xs:annotation>
+			<xs:documentation>An organization is comprised of 0 or more
+				organization units.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="organizationUnit" type="OrganizationUnit"
+				minOccurs="0" maxOccurs="unbounded"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="OrganizationUnit">
+		<xs:annotation>
+			<xs:documentation>An organization unit is comprised of 0 or more
+				organization units.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="organizationUnit" type="OrganizationUnit"
+				minOccurs="0" maxOccurs="unbounded"></xs:element>
+		</xs:sequence>
+		<xs:attribute name="type">
+			<xs:simpleType>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Organization"></xs:enumeration>
+					<xs:enumeration value="Location"></xs:enumeration>
+					<xs:enumeration value="Domain"></xs:enumeration>
+					<xs:enumeration value="Person"></xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="Location">
+		<xs:sequence>
+			<xs:element name="locationID"></xs:element>
+			<xs:element name="type"></xs:element>
+			<xs:group ref="ct:DescriptionGroup"></xs:group>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Domain">
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="a"></xs:element>
+			</xs:sequence>
+			<xs:element name="ipAddress"></xs:element>
+			<xs:element name="location" type="Location"></xs:element>
+			<xs:element name="address"></xs:element>
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:complexType name="User">
+		<xs:all>
+			<xs:element name="userName" type="xs:token"></xs:element>
+			<xs:element name="domain">
+				<xs:annotation>
+					<xs:documentation>This is a domain element which represents the
+						a
+						logical authentication are or location of a user.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+
 </xs:schema>
