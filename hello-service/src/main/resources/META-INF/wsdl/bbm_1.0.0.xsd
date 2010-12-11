@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xnal="urn:oasis:names:tc:ciq:xnal:3" xmlns:xal="urn:oasis:names:tc:ciq:xal:3"
 	xmlns:ct="urn:trajano.net:ct:2.0" elementFormDefault="qualified">
 	<xs:annotation>
 		<xs:documentation xml:space="preserve">This is the Base Business Model (bbm) schema.  The purpose of this schema is
@@ -25,6 +26,14 @@ are meant to be used as a root document.</xs:documentation>
 
 	<xs:import schemaLocation="ct_2.0.0.xsd" namespace="urn:trajano.net:ct:2.0" />
 
+	<xs:import
+		schemaLocation="http://docs.oasis-open.org/ciq/v3.0/prd03/xsd/default/xsd/xAL.xsd"
+		namespace="urn:oasis:names:tc:ciq:xal:3" />
+
+	<xs:import
+		schemaLocation="http://docs.oasis-open.org/ciq/v3.0/prd03/xsd/default/xsd/xNAL.xsd"
+		namespace="urn:oasis:names:tc:ciq:xnal:3" />
+
 	<xs:complexType name="Account">
 		<xs:annotation>
 			<xs:documentation xml:space="preserve">Generic account type.  The element must be defined as a sequence in order for
@@ -39,6 +48,25 @@ financialInstitutionNO).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="InternationalBankAccount">
+		<xs:complexContent>
+			<xs:restriction base="Account">
+				<xs:sequence>
+					<xs:element name="accountNO" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:space="preserve">Although this is designated as a number, it may contain alpha numeric data.</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:token">
+								<xs:pattern value="^[A-Z][A-Z][0-9 A-Z]+$"></xs:pattern>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
 	</xs:complexType>
 
 	<xs:complexType name="CanadianBankAccount">
@@ -58,7 +86,7 @@ financialInstitutionNO).</xs:documentation>
 		<xs:complexContent>
 			<xs:extension base="Account">
 				<xs:sequence>
-					<xs:element name="transitNO" minOccurs="0">
+					<xs:element name="branchNO" minOccurs="0">
 						<xs:simpleType>
 							<xs:restriction base="xs:token">
 								<xs:pattern value="\d\d\d\d\d"></xs:pattern>
@@ -66,7 +94,7 @@ financialInstitutionNO).</xs:documentation>
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
-					<xs:element name="financialInstituionNO" minOccurs="0">
+					<xs:element name="instituionNO" minOccurs="0">
 						<xs:simpleType>
 							<xs:restriction base="xs:token">
 								<xs:pattern value="\d\d\d"></xs:pattern>
@@ -82,29 +110,42 @@ financialInstitutionNO).</xs:documentation>
 	<xs:complexType name="UsBankAccount">
 		<xs:complexContent>
 			<xs:extension base="Account">
-				<xs:sequence>
-					<xs:element name="sortCode" minOccurs="0">
+				<xs:choice>
+					<xs:element name="routingTransitNumber" minOccurs="0">
 						<xs:simpleType>
 							<xs:restriction base="xs:token">
-								<xs:pattern value="\d\d\d\d\d"></xs:pattern>
-								<xs:length value="5"></xs:length>
+								<xs:pattern value="\d{9}"></xs:pattern>
+								<xs:length value="9"></xs:length>
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
-					<xs:element name="bankNO" minOccurs="0">
-						<xs:simpleType>
-							<xs:restriction base="xs:token">
-								<xs:pattern value="\d\d\d"></xs:pattern>
-								<xs:length value="3"></xs:length>
-							</xs:restriction>
-						</xs:simpleType>
-					</xs:element>
-				</xs:sequence>
+					<xs:sequence>
+						<xs:element name="federalReserveRoutingSymbol"
+							minOccurs="0">
+							<xs:simpleType>
+								<xs:restriction base="xs:token">
+									<xs:pattern value="\d\d\d\d"></xs:pattern>
+									<xs:length value="4"></xs:length>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="bankNO" minOccurs="0">
+							<xs:simpleType>
+								<xs:restriction base="xs:token">
+									<xs:pattern value="\d\d\d\d"></xs:pattern>
+									<xs:length value="4"></xs:length>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:choice>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
 
 	<xs:element name="account" type="Account"></xs:element>
+	<xs:element name="internationalBankAccount" type="InternationalBankAccount"
+		substitutionGroup="account"></xs:element>
 	<xs:element name="canadianBankAccount" type="CanadianBankAccount"
 		substitutionGroup="account"></xs:element>
 	<xs:element name="usBankAccount" type="UsBankAccount"
@@ -135,36 +176,6 @@ needed as you cannot have choices of attributes in XML schema language.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:choice>
-				<xs:element name="effectiveDate" type="xs:date"
-					minOccurs="0">
-					<xs:annotation>
-						<xs:documentation>Date when this event is effective. It is
-							used in
-							the following scenario: a person has
-							been living in UK from Jan to
-							April, but we only register it on
-							March so it is only effective
-							starting March even though the person
-							had lived longer there.
-						</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="effectiveTS" type="xs:dateTime"
-					minOccurs="0">
-					<xs:annotation>
-						<xs:documentation>timestamp when this event is effective. It is
-							used in the following scenario: a person has
-							been living in UK
-							from Jan to April, but we only register it on
-							March so it is only
-							effective starting March even though the person
-							had lived longer
-							there.
-					</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-			</xs:choice>
 			<xs:choice>
 				<xs:element name="date" type="xs:date" minOccurs="0">
 					<xs:annotation>
@@ -219,6 +230,36 @@ needed as you cannot have choices of attributes in XML schema language.
 						</xs:annotation>
 					</xs:element>
 				</xs:sequence>
+			</xs:choice>
+			<xs:choice>
+				<xs:element name="effectiveDate" type="xs:date"
+					minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Date when this event is effective. It is
+							used in
+							the following scenario: a person has
+							been living in UK from Jan to
+							April, but we only register it on
+							March so it is only effective
+							starting March even though the person
+							had lived longer there.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="effectiveTS" type="xs:dateTime"
+					minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>timestamp when this event is effective. It is
+							used in the following scenario: a person has
+							been living in UK
+							from Jan to April, but we only register it on
+							March so it is only
+							effective starting March even though the person
+							had lived longer
+							there.
+					</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
@@ -325,14 +366,23 @@ needed as you cannot have choices of attributes in XML schema language.
 			<xs:sequence>
 				<xs:element name="a"></xs:element>
 			</xs:sequence>
-			<xs:element name="ipAddress"></xs:element>
-			<xs:element name="location" type="Location"></xs:element>
-			<xs:element name="address"></xs:element>
+			<xs:element name="ipAddress" type="ct:IpAddress"></xs:element>
+			<xs:element name="uri" type="xs:anyURI"></xs:element>
+			<xs:element name="location" type="Location">
+				<xs:annotation>
+					<xs:documentation>A generic location.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="xal:Address">
+				<xs:annotation>
+					<xs:documentation>A physical address.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:choice>
 	</xs:complexType>
 
 	<xs:complexType name="User">
-		<xs:all>
+		<xs:sequence>
 			<xs:element name="userName" type="xs:token"></xs:element>
 			<xs:element name="domain">
 				<xs:annotation>
@@ -342,7 +392,12 @@ needed as you cannot have choices of attributes in XML schema language.
 					</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-		</xs:all>
+			<xs:group ref="ct:DescriptionGroup">
+				<xs:annotation>
+					<xs:documentation xml:space="preserve">Describes the user, usually the full name of the user.</xs:documentation>
+				</xs:annotation>
+			</xs:group>
+		</xs:sequence>
 	</xs:complexType>
 
 </xs:schema>
