@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tns:applicationFault errorCode="BLEH" level="ERRORx"
-	xmlns:p="urn:trajano.net:ct:2.0" xmlns:tns="http://ws.trajano.net/schema/business"
+<tns:body xmlns:p="urn:trajano.net:ct:2.0" xmlns:tns="http://ws.trajano.net/schema/business"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://ws.trajano.net/schema/business business.xsd " />
+	xsi:schemaLocation="http://ws.trajano.net/schema/business business.xsd ">
+
+	<tns:applicationFault errorCode="BLEH" level="ERRORx">
+		<!-- <OrgUnit> <ou type="Institution" name="423"> <ou type="Location" name="4234"> 
+			</ou> </ou> <LocationNO>3423</LocationNO> <InstitutionNO>342</InstitutionNO> 
+			</OrgUnit> -->
+	</tns:applicationFault>
+
+	<tns:institution name="TD">
+		<tns:location name="423" /> 
+	</tns:institution>
+</tns:body>

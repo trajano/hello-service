@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema targetNamespace="http://ws.trajano.net/schema/business"
-xmlns:ct="urn:trajano.net:ct:2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-xmlns="http://ws.trajano.net/schema/business">
-    <xsd:import schemaLocation="ct_2.0.0.xsd" namespace="urn:trajano.net:ct:2.0">
+	xmlns:ct="urn:trajano.net:ct:2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://ws.trajano.net/schema/business">
+	<xsd:import schemaLocation="ct_2.0.0.xsd" namespace="urn:trajano.net:ct:2.0">
 	</xsd:import>
 	<xsd:redefine schemaLocation="bbm_1.0.0.xsd"></xsd:redefine>
 	<xsd:element name="applicationFault" type="ct:ApplicationFault"></xsd:element>
@@ -21,5 +21,5 @@ xmlns="http://ws.trajano.net/schema/business">
 			</xsd:all>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:element name="oko" type="Account"></xsd:element>
+	<xsd:element name="body"></xsd:element>
 </xsd:schema>

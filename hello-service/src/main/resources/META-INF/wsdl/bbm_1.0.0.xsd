@@ -36,109 +36,82 @@ are meant to be used as a root document.</xs:documentation>
 
 	<xs:complexType name="Account">
 		<xs:annotation>
-			<xs:documentation xml:space="preserve">Generic account type.  The element must be defined as a sequence in order for
-derivation by extension to work.  Extensions must arrange the elements from
-more specific to less specific (e.g. accountNO to transitNO to
-financialInstitutionNO).</xs:documentation>
+			<xs:documentation xml:space="preserve">Generic account type.</xs:documentation>
 		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="accountNO" type="xs:token" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation xml:space="preserve">Although this is designated as a number, it may contain alpha numeric data.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
+		<xs:attribute name="accountNO" type="xs:token">
+			<xs:annotation>
+				<xs:documentation xml:space="preserve">Although this is designated as a number, it may contain alpha numeric data.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:anyAttribute namespace="##other">
+			<xs:annotation>
+				<xs:documentation>This attribute allows the account type to support
+					other groupings aside from the ones defined in this schema.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:anyAttribute>
 	</xs:complexType>
 
 	<xs:complexType name="InternationalBankAccount">
 		<xs:complexContent>
 			<xs:restriction base="Account">
-				<xs:sequence>
-					<xs:element name="accountNO" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation xml:space="preserve">Although this is designated as a number, it may contain alpha numeric data.</xs:documentation>
-						</xs:annotation>
-						<xs:simpleType>
-							<xs:restriction base="xs:token">
-								<xs:pattern value="^[A-Z][A-Z][0-9 A-Z]+$"></xs:pattern>
-							</xs:restriction>
-						</xs:simpleType>
-					</xs:element>
-				</xs:sequence>
+				<xs:attribute name="accountNO">
+					<xs:annotation>
+						<xs:documentation xml:space="preserve">Although this is designated as a number, it may contain alpha numeric data.</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:token">
+							<xs:pattern value="^[A-Z][A-Z][0-9 A-Z]+$"></xs:pattern>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
 
 	<xs:complexType name="CanadianBankAccount">
 		<xs:annotation>
-			<xs:documentation>This represents a Canadian bank account which is
-				based on the CPA format.
-
-				The additional elements are using token with
-				a pattern that verifies
-				that is
-				all digits rather than using
-				positiveInteger types as we want to
-				enforce
-				clients to send the
-				leading zeros for the numbers.</xs:documentation>
+			<xs:documentation xml:space="preserve">This represents a Canadian bank account which is based on the CPA format. The
+transit number is specified as a whole rather than separating the branch from
+the institution number as an account number should have all the components. The
+institution number may be explicitly written as an implementation detail.
+			</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:extension base="Account">
-				<xs:sequence>
-					<xs:element name="branchNO" minOccurs="0">
-						<xs:simpleType>
-							<xs:restriction base="xs:token">
-								<xs:pattern value="\d\d\d\d\d"></xs:pattern>
-								<xs:length value="5"></xs:length>
-							</xs:restriction>
-						</xs:simpleType>
-					</xs:element>
-					<xs:element name="instituionNO" minOccurs="0">
-						<xs:simpleType>
-							<xs:restriction base="xs:token">
-								<xs:pattern value="\d\d\d"></xs:pattern>
-								<xs:length value="3"></xs:length>
-							</xs:restriction>
-						</xs:simpleType>
-					</xs:element>
-				</xs:sequence>
+				<xs:attribute name="transitNumber">
+					<xs:annotation>
+						<xs:documentation xml:space="preserve">This is the transit number.  It allows for both YYYYY-XXX and 0XXXYYYYY formats
+where XXX is the institution number and YYYYY is the branch number.
+Derivations of this type may choose to limit it to one format.
+</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:token">
+							<xs:pattern value="\d\d\d\d\d\-\d\d\d"></xs:pattern>
+							<xs:pattern value="0\d\d\d\d\d\d\d\d"></xs:pattern>
+							<xs:length value="9"></xs:length>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
 
 	<xs:complexType name="UsBankAccount">
+		<xs:annotation>
+			<xs:documentation xml:space="preserve">This only provides the RTN.</xs:documentation>
+		</xs:annotation>
 		<xs:complexContent>
 			<xs:extension base="Account">
-				<xs:choice>
-					<xs:element name="routingTransitNumber" minOccurs="0">
-						<xs:simpleType>
-							<xs:restriction base="xs:token">
-								<xs:pattern value="\d{9}"></xs:pattern>
-								<xs:length value="9"></xs:length>
-							</xs:restriction>
-						</xs:simpleType>
-					</xs:element>
-					<xs:sequence>
-						<xs:element name="federalReserveRoutingSymbol"
-							minOccurs="0">
-							<xs:simpleType>
-								<xs:restriction base="xs:token">
-									<xs:pattern value="\d\d\d\d"></xs:pattern>
-									<xs:length value="4"></xs:length>
-								</xs:restriction>
-							</xs:simpleType>
-						</xs:element>
-						<xs:element name="bankNO" minOccurs="0">
-							<xs:simpleType>
-								<xs:restriction base="xs:token">
-									<xs:pattern value="\d\d\d\d"></xs:pattern>
-									<xs:length value="4"></xs:length>
-								</xs:restriction>
-							</xs:simpleType>
-						</xs:element>
-					</xs:sequence>
-				</xs:choice>
+				<xs:attribute name="routingTransitNumber">
+					<xs:simpleType>
+						<xs:restriction base="xs:token">
+							<xs:pattern value="\d{9}"></xs:pattern>
+							<xs:length value="9"></xs:length>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
@@ -169,18 +142,15 @@ financialInstitutionNO).</xs:documentation>
 		<xs:annotation>
 			<xs:documentation xml:space="preserve">This represents a business event. A business event represents a either a point
 in time or a period. Time components for both Date and DateTime are provided to
-allow clients to choose which precision they would require.
-
-This violates the coding standard rule for attributes, but the violation is
-needed as you cannot have choices of attributes in XML schema language.
+allow clients to choose which precision they would require.  The time objects
+are business values and should be elements.  
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:choice>
 				<xs:element name="date" type="xs:date" minOccurs="0">
 					<xs:annotation>
-						<xs:documentation>Date when this event had started.
-						</xs:documentation>
+						<xs:documentation xml:space="preserve">Date when this event had started.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="timestamp" type="xs:dateTime"
@@ -332,34 +302,6 @@ needed as you cannot have choices of attributes in XML schema language.
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:complexType name="OrganizationUnit">
-		<xs:annotation>
-			<xs:documentation>An organization unit is comprised of 0 or more
-				organization units.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="organizationUnit" type="OrganizationUnit"
-				minOccurs="0" maxOccurs="unbounded"></xs:element>
-		</xs:sequence>
-		<xs:attribute name="type">
-			<xs:simpleType>
-				<xs:restriction base="xs:token">
-					<xs:enumeration value="Organization"></xs:enumeration>
-					<xs:enumeration value="Location"></xs:enumeration>
-					<xs:enumeration value="Domain"></xs:enumeration>
-					<xs:enumeration value="Person"></xs:enumeration>
-				</xs:restriction>
-			</xs:simpleType>
-		</xs:attribute>
-	</xs:complexType>
-
-	<xs:complexType name="Location">
-		<xs:sequence>
-			<xs:element name="locationID"></xs:element>
-			<xs:element name="type"></xs:element>
-			<xs:group ref="ct:DescriptionGroup"></xs:group>
-		</xs:sequence>
-	</xs:complexType>
 
 	<xs:complexType name="Domain">
 		<xs:choice>
@@ -384,12 +326,9 @@ needed as you cannot have choices of attributes in XML schema language.
 	<xs:complexType name="User">
 		<xs:sequence>
 			<xs:element name="userName" type="xs:token"></xs:element>
-			<xs:element name="domain">
+			<xs:element name="domain" type="Domain">
 				<xs:annotation>
-					<xs:documentation>This is a domain element which represents the
-						a
-						logical authentication are or location of a user.
-					</xs:documentation>
+					<xs:documentation xml:space="preserve">Represents the a logical authentication area or location of a user.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:group ref="ct:DescriptionGroup">
@@ -399,5 +338,71 @@ needed as you cannot have choices of attributes in XML schema language.
 			</xs:group>
 		</xs:sequence>
 	</xs:complexType>
+
+	<xs:complexType name="OrganizationUnit">
+		<xs:sequence>
+			<xs:element ref="organizationUnit" minOccurs="0"></xs:element>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Other information that may be put into the
+						organization unit.
+						</xs:documentation>
+				</xs:annotation>
+			</xs:any>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:normalizedString">
+			<xs:annotation>
+				<xs:documentation xml:space="preserve">Name of the organization unit.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:element name="organizationUnit" type="OrganizationUnit">
+		<xs:annotation>
+			<xs:documentation xml:space="preserve">
+Represents an organization unit. An organization unit can contain another
+organization unit to assemble a hierarchy.  The elements should be organized 
+so that the containing element is a lower level in the hierarchy.
+
+Therefore when reading it, it would be like this:
+Archimedes Trajano 
+  of Some Group 
+    of Some Country 
+      of Some Organization
+ 
+Implementors would create new elements with a substitutionGroup.  This avoids
+having to create type enumerations.
+			</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:complexType name="Location">
+		<xs:complexContent>
+			<xs:restriction base="OrganizationUnit">
+				<xs:sequence>
+					<xs:element ref="institution" minOccurs="0"></xs:element>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Other information that may be put into the
+								organization unit.
+						</xs:documentation>
+						</xs:annotation>
+					</xs:any>
+				</xs:sequence>
+				<xs:attribute name="name" type="xs:normalizedString">
+					<xs:annotation>
+						<xs:documentation xml:space="preserve">Name of the organization unit.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:element name="location" substitutionGroup="organizationUnit"
+		type="Location">
+	</xs:element>
+	<xs:element name="institution" substitutionGroup="organizationUnit"
+		type="OrganizationUnit">
+	</xs:element>
 
 </xs:schema>

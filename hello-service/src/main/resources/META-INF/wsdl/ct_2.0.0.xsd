@@ -20,6 +20,7 @@ File naming and version standards:
   even if only the first value is used in the namespace.
 
 Naming standards:
+* use American English spelling.  They tend to be shorter.
 * element names are lower case.  To conform to XHTML.
 * attribute names are lower case.  To conform to XHTML.
 * Types are title case and does not end with Type.  This prevents the word
@@ -73,8 +74,23 @@ When to use attributes vs. elements:
   eventStartDate and eventEndDate) for an element.  In the previous example,
   there should be a new element for "event" which may contain the startDate and
   endDate attributes.
+* Business Date, DateTime and numbers (e.g. counts, amount and rate) should be
+  elements.  These elements are usually annotated with an additional attribute
+  to give special meaning so this rule was added.
+* Non-business time elements such indicating auditing elements of CRUD
+  operations (e.g. created, lastRead, lastUpdated, deleted, elementLoadTime) are
+  attributes as they would be describing the element.
+* Business identifiers such as an account number is an attribute.
+* Non-business numbers such as hash codes and indices should be attributes.
+* xml:id and xml:lang must be attributes referencing the XML schema
 * Use elements if the type will be complex.
 * Use attributes if the value is a simple type and does not repeat.
+* Values in name-value pair patterns are elements. Even if it is a token,
+  language or anyUri.
+* Any other instance of normalizedString values including those that
+  derive from it such as token, language, anyUri are attributes as they
+  describe the element.
+* Prefer attributes when technically possible.
 		</xs:documentation>
 	</xs:annotation>
 	<xs:import namespace="http://www.w3.org/XML/1998/namespace"
@@ -197,7 +213,7 @@ code.</xs:documentation>
 			</xs:simpleType>
 		</xs:attribute>
 		<xs:attribute name="level" use="optional" type="ErrorLevel"
-			default="ERROR">
+			default="Error">
 			<xs:annotation>
 				<xs:documentation xml:space="preserve">The error level.  Generally it would be ERROR for the most part as such it is
 set as the default as such the use of this attribute is optional.  WARNING may
@@ -219,9 +235,9 @@ may get passed into an exception or just another data structure?</xs:documentati
 			<xs:documentation xml:space="preserve">These are possible error level values.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
-			<xs:enumeration value="ERROR"></xs:enumeration>
-			<xs:enumeration value="WARNING"></xs:enumeration>
-			<xs:enumeration value="INFO"></xs:enumeration>
+			<xs:enumeration value="Error"></xs:enumeration>
+			<xs:enumeration value="Warning"></xs:enumeration>
+			<xs:enumeration value="Info"></xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="ErrorLevel">
@@ -332,12 +348,10 @@ have some text.</xs:documentation>
 		</xs:choice>
 	</xs:group>
 
-	<xs:attributeGroup name="DateRangeGroup">
-		<xs:attribute name="startDate" type="xs:date" use="optional"></xs:attribute>
-		<xs:attribute name="endDate" type="xs:date" use="optional"></xs:attribute>
-	</xs:attributeGroup>
-	<xs:attributeGroup name="DateTimeRangeGroup">
-		<xs:attribute name="startTS" type="xs:dateTime" use="optional"></xs:attribute>
-		<xs:attribute name="endTS" type="xs:dateTime" use="optional"></xs:attribute>
+	<xs:attributeGroup name="CrudGroup">
+		<xs:attribute name="createTS" type="xs:dateTime" use="optional"></xs:attribute>
+		<xs:attribute name="readTS" type="xs:dateTime" use="optional"></xs:attribute>
+		<xs:attribute name="updatedTS" type="xs:dateTime" use="optional"></xs:attribute>
+		<xs:attribute name="deletedTS" type="xs:dateTime" use="optional"></xs:attribute>
 	</xs:attributeGroup>
 </xs:schema>
